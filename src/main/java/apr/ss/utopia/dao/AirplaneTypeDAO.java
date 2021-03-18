@@ -31,7 +31,7 @@ public class AirplaneTypeDAO extends BaseDAO<AirplaneType> {
     }
 
     public List<AirplaneType> readAirplaneTypesByCode(AirplaneType airplaneType) throws ClassNotFoundException, SQLException {
-        return read("select * from " + AirplaneType.NAME + " where " + AirplaneType.ID + " = ", new Object[]{airplaneType.getId()});
+        return read("select * from " + AirplaneType.NAME + " where " + AirplaneType.ID + " = ?", new Object[]{airplaneType.getId()});
     }
 
 

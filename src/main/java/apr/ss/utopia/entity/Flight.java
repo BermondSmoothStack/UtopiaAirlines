@@ -1,6 +1,7 @@
 package apr.ss.utopia.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Flight {
 
@@ -65,5 +66,18 @@ public class Flight {
 
     public void setSeatPrice(Float seatPrice) {
         this.seatPrice = seatPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flight flight = (Flight) o;
+        return id.equals(flight.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

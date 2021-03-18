@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RouteDAO extends BaseDAO {
+public class RouteDAO extends BaseDAO<Route> {
 
     public RouteDAO(Connection conn) {
         super(conn);
@@ -32,7 +32,7 @@ public class RouteDAO extends BaseDAO {
     }
 
     public List<Route> readRoutesByCode(Route route) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Route.NAME + " where " + Route.ID + " = ", new Object[]{route.getId()});
+        return read("select * from " + Route.NAME + " where " + Route.ID + " = ?", new Object[]{route.getId()});
     }
 
 

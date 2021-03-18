@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightDAO extends BaseDAO {
+public class FlightDAO extends BaseDAO<Flight> {
 
     public FlightDAO(Connection conn) {
         super(conn);
@@ -22,7 +22,7 @@ public class FlightDAO extends BaseDAO {
                 new Object[]{flight.getId(), flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice()});
     }
 
-    public void updateRoute(Flight flight) throws SQLException {
+    public void updateFlight(Flight flight) throws SQLException {
         save("update " + Flight.NAME + " set " +
                 Flight.ROUTE + " = ?, " +
                 Flight.AIRPLANE + " = ?, " +
@@ -33,20 +33,20 @@ public class FlightDAO extends BaseDAO {
                 new Object[]{flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice()});
     }
 
-    public void deleteRoute(Flight flight) throws SQLException {
+    public void deleteFlight(Flight flight) throws SQLException {
         save("delete from " + Flight.NAME + " where " + Flight.ID + " = ?", new Object[]{flight.getId()});
     }
 
-    public List<Flight> readAllRoute() throws ClassNotFoundException, SQLException {
+    public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {
         return read("select * from " + Flight.NAME, null);
     }
 
-    public List<Flight> readRoutesByCode(Flight flight) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Flight.NAME + " where " + Flight.ID + " = ", new Object[]{flight.getId()});
+    public List<Flight> readFlightsByCode(Flight flight) throws ClassNotFoundException, SQLException {
+        return read("select * from " + Flight.NAME + " where " + Flight.ID + " = ?", new Object[]{flight.getId()});
     }
 
     @Override
-    public List<Flight> extractData(ResultSet rs) throws ClassNotFoundException, SQLException {
+    public List<Flight> extractData(ResultSet rs) throws SQLException {
         List<Flight> flights = new ArrayList<>();
         while(rs.next()){
             Flight f = new Flight();

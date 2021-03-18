@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AirportDAO extends BaseDAO {
+public class AirportDAO extends BaseDAO<Airport> {
 
     public AirportDAO(Connection conn) {
         super(conn);
@@ -32,7 +32,7 @@ public class AirportDAO extends BaseDAO {
     }
 
     public List<Airport> readAirportsByCode(Airport airport) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Airport.NAME + " where " + Airport.CODE + " = ", new Object[]{airport.getAirportCode()});
+        return read("select * from " + Airport.NAME + " where " + Airport.CODE + " = ?", new Object[]{airport.getAirportCode()});
     }
 
     @Override

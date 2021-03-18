@@ -1,5 +1,7 @@
 package apr.ss.utopia.entity;
 
+import java.util.Objects;
+
 public class Route {
 
     public static final String NAME = "route";
@@ -33,5 +35,18 @@ public class Route {
 
     public void setOriginAirport(Airport originAirport) {
         this.originAirport = originAirport;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return id.equals(route.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
