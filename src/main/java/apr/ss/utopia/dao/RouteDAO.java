@@ -16,11 +16,11 @@ public class RouteDAO extends BaseDAO {
     }
 
     public void addRoute(Route route) throws SQLException {
-        save("insert into (" + Route.DEST_CODE + ", " + Route.ORIGIN_CODE + ") " + Route.NAME + " values (?)", new Object[]{route.getDestinationAirport(), route.getOriginAirport()});
+        save("insert into (" + Route.DEST_CODE + ", " + Route.ORIGIN_CODE + ") " + Route.NAME + " values (?, ?)", new Object[]{route.getDestinationAirport(), route.getOriginAirport()});
     }
 
     public void updateRoute(Route route) throws SQLException {
-        save("update " + Route.NAME + " set " + Route.DEST_CODE + " = ?, " + Route.ORIGIN_CODE + " = ? where " + Route.ID + " = ?", new Object[]{route.getDestinationAirport(), route.getOriginAirport() ,route.getId()});
+        save("update " + Route.NAME + " set " + Route.DEST_CODE + " = ?, " + Route.ORIGIN_CODE + " = ? where " + Route.ID + " = ?", new Object[]{route.getDestinationAirport(), route.getOriginAirport(), route.getId()});
     }
 
     public void deleteRoute(Route route) throws SQLException {
@@ -38,7 +38,7 @@ public class RouteDAO extends BaseDAO {
 
     @Override
     public List<Route> extractData(ResultSet rs) throws SQLException {
-        List<Route> route = new ArrayList<>();
+        List<Route> routes = new ArrayList<>();
         while (rs.next()) {
             Route r = new Route();
             Airport destination = new Airport();
@@ -51,8 +51,8 @@ public class RouteDAO extends BaseDAO {
             r.setDestinationAirport(destination);
             r.setOriginAirport(origin);
 
-            route.add(r);
+            routes.add(r);
         }
-        return route;
+        return routes;
     }
 }
