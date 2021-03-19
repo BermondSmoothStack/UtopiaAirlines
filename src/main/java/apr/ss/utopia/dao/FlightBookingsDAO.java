@@ -1,11 +1,11 @@
 package apr.ss.utopia.dao;
 
-import apr.ss.utopia.entity.FlightBookings;
-import apr.ss.utopia.entity.Route;
+import apr.ss.utopia.entity.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
@@ -26,7 +26,7 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
     }
 
     public List<FlightBookings> readAllFlightBookings() throws ClassNotFoundException, SQLException {
-        return read("select * from " + FlightBookings.NAME, null);
+        return read("select * from " + FlightBookings.NAME, new Object[]{});
     }
 
     public List<FlightBookings> readFlightBookingssByCode(FlightBookings flightBookings) throws ClassNotFoundException, SQLException {
@@ -38,6 +38,20 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
 
     @Override
     public List<FlightBookings> extractData(ResultSet rs) throws ClassNotFoundException, SQLException {
-        return null;
+        List<FlightBookings> flightBookings = new ArrayList<>();
+        while (rs.next()) {
+            FlightBookings fb = new FlightBookings();
+            Flight f = new Flight();
+            Booking b = new Booking();
+
+            f.setId(rs.getInt(FlightBookings.FLIGHT_ID));
+            b.setId(rs.getInt(FlightBookings.BOOKING_ID));
+
+            fb.setFlight(f);
+            fb.setBooking(b);
+
+            flightBookings.add(fb);
+        }
+        return flightBookings;
     }
 }

@@ -38,7 +38,7 @@ public class FlightDAO extends BaseDAO<Flight> {
     }
 
     public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Flight.NAME, null);
+        return read("select * from " + Flight.NAME, new Object[]{});
     }
 
     public List<Flight> readFlightsByCode(Flight flight) throws ClassNotFoundException, SQLException {
@@ -63,7 +63,6 @@ public class FlightDAO extends BaseDAO<Flight> {
 
             flights.add(f);
         }
-
 
         return flights;
     }
