@@ -2,14 +2,14 @@ package apr.ss.utopia.entity;
 
 import java.util.Objects;
 
-public class BookingAgent {
+public class BookingUser {
 
     public static final String NAME = "booking_agent";
-    public static final String AGENT_ID = "agent_id";
+    public static final String USER_ID = "agent_id";
     public static final String BOOKING_ID = "booking_id";
 
     private Booking booking;
-    private User agent;
+    private User user;
 
     public Booking getBooking() {
         return booking;
@@ -20,23 +20,23 @@ public class BookingAgent {
     }
 
     public User getUser() {
-        return agent;
+        return user;
     }
 
-    public void setUser(User agent) {
-        this.agent = agent;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BookingAgent that = (BookingAgent) o;
-        return booking.equals(that.booking) && agent.equals(that.agent);
+        BookingUser that = (BookingUser) o;
+        return booking.equals(that.booking) && user.equals(that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(booking, agent);
+        return Objects.hash(booking, user);
     }
 }
