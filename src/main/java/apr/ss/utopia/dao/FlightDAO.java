@@ -30,7 +30,7 @@ public class FlightDAO extends BaseDAO<Flight> {
                 Flight.RESERVED_SEATS + " = ?, " +
                 Flight.SEAT_PRICE + " = ? " +
                 "where " + Flight.ID + " = ?",
-                new Object[]{flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice()});
+                new Object[]{flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice(), flight.getId()});
     }
 
     public void deleteFlight(Flight flight) throws SQLException {

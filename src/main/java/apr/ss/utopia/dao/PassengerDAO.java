@@ -49,7 +49,8 @@ public class PassengerDAO extends BaseDAO<Passenger> {
                         passenger.getFamilyName(),
                         java.sql.Date.valueOf(passenger.getDob().toLocalDate()),
                         passenger.getGender(),
-                        passenger.getAddress()
+                        passenger.getAddress(),
+                        passenger.getId()
                 });
     }
 
