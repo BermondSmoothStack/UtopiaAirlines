@@ -15,14 +15,24 @@ public class BookingAgentDAO extends BaseDAO<BookingAgent> {
     }
 
     public void addFlightBookings(BookingAgent bookingAgent) throws SQLException {
-        save("insert into (" + BookingAgent.AGENT_ID + ", " + BookingAgent.BOOKING_ID + ") " + BookingAgent.NAME + " values (?, ?)", new Object[]{bookingAgent.getUser().getId(), bookingAgent.getBooking().getId()});
+        save("insert into (" +
+                        BookingAgent.AGENT_ID + ", " +
+                        BookingAgent.BOOKING_ID + ") " +
+                        BookingAgent.NAME + " values (?, ?)",
+                new Object[]{
+                        bookingAgent.getUser().getId(),
+                        bookingAgent.getBooking().getId()
+                });
     }
 
     public void deleteFlightBookings(BookingAgent bookingAgent) throws SQLException {
         save("delete from " + BookingAgent.NAME +
                         " where " + BookingAgent.AGENT_ID + " = ? " +
                         "AND " + BookingAgent.BOOKING_ID + " = ?",
-                new Object[]{bookingAgent.getUser().getId(), bookingAgent.getBooking().getId()});
+                new Object[]{
+                        bookingAgent.getUser().getId(),
+                        bookingAgent.getBooking().getId()
+                });
     }
 
     public List<BookingAgent> readAllFlightBookings() throws ClassNotFoundException, SQLException {

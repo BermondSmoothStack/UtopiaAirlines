@@ -16,22 +16,22 @@ public class BookingUserDAO extends BaseDAO<BookingUser>{
         super(conn);
     }
 
-    public void addFlightBookings(BookingUser bookingUser) throws SQLException {
+    public void addBookingUser(BookingUser bookingUser) throws SQLException {
         save("insert into (" + BookingUser.USER_ID + ", " + BookingUser.BOOKING_ID + ") " + BookingUser.NAME + " values (?, ?)", new Object[]{bookingUser.getUser().getId(), bookingUser.getBooking().getId()});
     }
 
-    public void deleteFlightBookings(BookingUser bookingUser) throws SQLException {
+    public void deleteBookingUser(BookingUser bookingUser) throws SQLException {
         save("delete from " + BookingUser.NAME +
                         " where " + BookingUser.USER_ID + " = ? " +
                         "AND " + BookingUser.BOOKING_ID + " = ?",
                 new Object[]{bookingUser.getUser().getId(), bookingUser.getBooking().getId()});
     }
 
-    public List<BookingUser> readAllFlightBookings() throws ClassNotFoundException, SQLException {
+    public List<BookingUser> readAllBookingUser() throws ClassNotFoundException, SQLException {
         return read("select * from " + BookingUser.NAME, new Object[]{});
     }
 
-    public List<BookingUser> readFlightBookingsByCode(BookingUser bookingUser) throws ClassNotFoundException, SQLException {
+    public List<BookingUser> readBookingUserByCode(BookingUser bookingUser) throws ClassNotFoundException, SQLException {
         return read("select * from " + BookingUser.NAME +
                         " where " + BookingUser.USER_ID + " = ?" +
                         " and " + BookingUser.BOOKING_ID + " = ?",

@@ -16,11 +16,19 @@ public class RouteDAO extends BaseDAO<Route> {
     }
 
     public void addRoute(Route route) throws SQLException {
-        save("insert into (" + Route.DEST_CODE + ", " + Route.ORIGIN_CODE + ") " + Route.NAME + " values (?, ?)", new Object[]{route.getDestinationAirport(), route.getOriginAirport()});
+        save("insert into (" +
+                        Route.DEST_CODE + ", " +
+                        Route.ORIGIN_CODE + ") " +
+                        Route.NAME + " values (?, ?)",
+                new Object[]{route.getDestinationAirport(), route.getOriginAirport()});
     }
 
     public void updateRoute(Route route) throws SQLException {
-        save("update " + Route.NAME + " set " + Route.DEST_CODE + " = ?, " + Route.ORIGIN_CODE + " = ? where " + Route.ID + " = ?", new Object[]{route.getDestinationAirport(), route.getOriginAirport(), route.getId()});
+        save("update " + Route.NAME + " set " +
+                        Route.DEST_CODE + " = ?, " +
+                        Route.ORIGIN_CODE + " = ? " +
+                        "where " + Route.ID + " = ?",
+                new Object[]{route.getDestinationAirport(), route.getOriginAirport(), route.getId()});
     }
 
     public void deleteRoute(Route route) throws SQLException {
@@ -28,7 +36,7 @@ public class RouteDAO extends BaseDAO<Route> {
     }
 
     public List<Route> readAllRoute() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Route.NAME, null);
+        return read("select * from " + Route.NAME, new Object[]{});
     }
 
     public List<Route> readRoutesByCode(Route route) throws ClassNotFoundException, SQLException {

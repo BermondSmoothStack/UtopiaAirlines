@@ -55,11 +55,13 @@ public class PassengerDAO extends BaseDAO<Passenger> {
     }
 
     public void deletePassenger(Passenger passenger) throws SQLException {
-        save("delete from " + Passenger.NAME + " where " + Passenger.ID + " = ?", new Object[]{passenger.getId()});
+        save("delete from " + Passenger.NAME + " where " +
+                        Passenger.ID + " = ?",
+                new Object[]{passenger.getId()});
     }
 
     public List<Passenger> readAllPassenger() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Passenger.NAME, null);
+        return read("select * from " + Passenger.NAME, new Object[]{});
     }
 
     public List<Passenger> readPassengersByCode(Passenger passenger) throws ClassNotFoundException, SQLException {

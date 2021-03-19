@@ -18,19 +18,40 @@ public class FlightDAO extends BaseDAO<Flight> {
     }
 
     public void addFlight(Flight flight) throws SQLException {
-        save("insert into (" + Flight.ID + "," + Flight.ROUTE + ", " + Flight.AIRPLANE + ", " + Flight.DEPARTURE + ", " + Flight.RESERVED_SEATS + "," + Flight.SEAT_PRICE + ") " + Flight.NAME + " values (?,?,?,?,?,?)",
-                new Object[]{flight.getId(), flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice()});
+        save("insert into (" +
+                        Flight.ID + "," +
+                        Flight.ROUTE + ", " +
+                        Flight.AIRPLANE + ", " +
+                        Flight.DEPARTURE + ", " +
+                        Flight.RESERVED_SEATS + "," +
+                        Flight.SEAT_PRICE + ") " +
+                        Flight.NAME + " values (?,?,?,?,?,?)",
+                new Object[]{
+                        flight.getId(),
+                        flight.getRoute().getId(),
+                        flight.getAirplane().getId(),
+                        flight.getDepartureTime(),
+                        flight.getReservedSeats(),
+                        flight.getSeatPrice()
+                });
     }
 
     public void updateFlight(Flight flight) throws SQLException {
         save("update " + Flight.NAME + " set " +
-                Flight.ROUTE + " = ?, " +
-                Flight.AIRPLANE + " = ?, " +
-                Flight.DEPARTURE + " = ?, " +
-                Flight.RESERVED_SEATS + " = ?, " +
-                Flight.SEAT_PRICE + " = ? " +
-                "where " + Flight.ID + " = ?",
-                new Object[]{flight.getRoute().getId(), flight.getAirplane().getId(), flight.getDepartureTime(), flight.getReservedSeats(), flight.getSeatPrice(), flight.getId()});
+                        Flight.ROUTE + " = ?, " +
+                        Flight.AIRPLANE + " = ?, " +
+                        Flight.DEPARTURE + " = ?, " +
+                        Flight.RESERVED_SEATS + " = ?, " +
+                        Flight.SEAT_PRICE + " = ? " +
+                        "where " + Flight.ID + " = ?",
+                new Object[]{
+                        flight.getRoute().getId(),
+                        flight.getAirplane().getId(),
+                        flight.getDepartureTime(),
+                        flight.getReservedSeats(),
+                        flight.getSeatPrice(),
+                        flight.getId()
+                });
     }
 
     public void deleteFlight(Flight flight) throws SQLException {
@@ -48,7 +69,7 @@ public class FlightDAO extends BaseDAO<Flight> {
     @Override
     public List<Flight> extractData(ResultSet rs) throws SQLException {
         List<Flight> flights = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             Flight f = new Flight();
             Airplane a = new Airplane();
             Route r = new Route();

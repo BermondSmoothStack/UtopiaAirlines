@@ -15,11 +15,17 @@ public class RoleDAO extends BaseDAO<Role> {
     }
 
     public void addRole(Role role) throws SQLException {
-        save("insert into (" + Role.ROLE_NAME + ") " + Role.NAME + " values (?)", new Object[]{role.getName()});
+        save("insert into (" +
+                        Role.ROLE_NAME + ") " +
+                        Role.NAME + " values (?)",
+                new Object[]{role.getName()});
     }
 
     public void updateRole(Role role) throws SQLException {
-        save("update " + Role.NAME + " set " + Role.ROLE_NAME + " = ? where " + Role.ID + " = ?", new Object[]{role.getName(), role.getId()});
+        save("update " + Role.NAME + " set " +
+                        Role.ROLE_NAME + " = ? " +
+                        "where " + Role.ID + " = ?",
+                new Object[]{role.getName(), role.getId()});
     }
 
     public void deleteRole(Role role) throws SQLException {
@@ -27,7 +33,7 @@ public class RoleDAO extends BaseDAO<Role> {
     }
 
     public List<Role> readAllRole() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Role.NAME, null);
+        return read("select * from " + Role.NAME, new Object[]{});
     }
 
     public List<Role> readRolesByCode(Role role) throws ClassNotFoundException, SQLException {

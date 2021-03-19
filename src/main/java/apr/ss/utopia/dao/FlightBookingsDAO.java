@@ -15,7 +15,14 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
     }
 
     public void addFlightBookings(FlightBookings flightBookings) throws SQLException {
-        save("insert into (" + FlightBookings.FLIGHT_ID + ", " + FlightBookings.BOOKING_ID + ") " + FlightBookings.NAME + " values (?, ?)", new Object[]{flightBookings.getFlight().getId(), flightBookings.getBooking().getId()});
+        save("insert into (" +
+                        FlightBookings.FLIGHT_ID + ", " +
+                        FlightBookings.BOOKING_ID + ") " +
+                        FlightBookings.NAME + " values (?, ?)",
+                new Object[]{
+                        flightBookings.getFlight().getId(),
+                        flightBookings.getBooking().getId()
+                });
     }
 
     public void deleteFlightBookings(FlightBookings flightBookings) throws SQLException {
@@ -29,7 +36,7 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
         return read("select * from " + FlightBookings.NAME, new Object[]{});
     }
 
-    public List<FlightBookings> readFlightBookingssByCode(FlightBookings flightBookings) throws ClassNotFoundException, SQLException {
+    public List<FlightBookings> readFlightBookingsByCode(FlightBookings flightBookings) throws ClassNotFoundException, SQLException {
         return read("select * from " + FlightBookings.NAME +
                         " where " + FlightBookings.FLIGHT_ID + " = ?" +
                         " and " + FlightBookings.BOOKING_ID + " = ?",
