@@ -21,6 +21,7 @@ public class MainMenu implements Menu {
                     // TODO: Traveler path
                     break;
                 default:
+                    System.out.println("Input invalid, try again.");
                     break;
             }
         }

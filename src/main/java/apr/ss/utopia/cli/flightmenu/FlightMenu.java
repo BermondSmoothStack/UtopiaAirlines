@@ -12,6 +12,7 @@ public class FlightMenu implements Menu {
             switch(getMenuSelection()){
                 case 1:
                     // TODO: View Flight
+                    new FlightViewMenu(flight);
                     break;
                 case 2:
                     // TODO Update Flight
@@ -32,7 +33,6 @@ public class FlightMenu implements Menu {
         System.out.println("[2] Update details of the flight");
         System.out.println("[3] Add Seats to Flight");
         System.out.println("[4] Quit to previous menu");
-
     }
 
     @Override

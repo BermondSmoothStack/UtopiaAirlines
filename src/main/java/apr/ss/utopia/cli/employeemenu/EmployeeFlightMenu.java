@@ -24,20 +24,24 @@ public class EmployeeFlightMenu implements Menu {
     @Override
     public void display() {
         // TODO: Query flights:
-        //  select origin.iata_id as origin_id, origin.city as origin, destination.iata_id as destination_id,  destination.city as destination from (
-        //  select iata_id, city
+        //  select origin.iata_id as origin_id, origin.city as origin, destination.iata_id as destination_id,  destination.city as destination
+        //  from
+        //  (select iata_id, city
         //  from flight
         //  join route
         //  on flight.id = route.id
         //  join airport
         //  on route.origin_id = airport.iata_id) as origin,
+        //  *
         //  (select iata_id, city
         //  from flight
         //  join route
         //  on flight.id = route.id
         //  join airport
         //  on route.destination_id = airport.iata_id) as destination
-        //  ** managedFlights = resultSet
+        //  *
+        //  ** managedFlights = resultSet **
+
         int c = 1;
         for (Flight f : managedFlights) {
             String item = "[" + c + "] " +
