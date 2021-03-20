@@ -6,6 +6,7 @@ import apr.ss.utopia.entity.Role;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoleDAO extends BaseDAO<Role> {
@@ -41,7 +42,16 @@ public class RoleDAO extends BaseDAO<Role> {
     }
 
     @Override
-    public List extractData(ResultSet rs) throws ClassNotFoundException, SQLException {
-        return null;
+    public List<Role> extractData(ResultSet rs) throws ClassNotFoundException, SQLException {
+        List<Role> roles = new ArrayList<>();
+        while (rs.next()) {
+            Role r = new Role();
+
+            r.setId(rs.getInt(Role.ID));
+            r.setName(rs.getString(Role.ROLE_NAME));
+
+            roles.add(r);
+        }
+        return roles;
     }
 }

@@ -84,6 +84,7 @@ public class PassengerDAO extends BaseDAO<Passenger> {
             p.setDob(rs.getTimestamp(Passenger.DOB).toLocalDateTime());
             p.setGender(rs.getString(Passenger.GENDER));
             p.setAddress(rs.getString(Passenger.ADDR));
+            passengers.add(p);
         }
         return passengers;
     }
