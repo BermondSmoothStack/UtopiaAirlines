@@ -9,7 +9,7 @@ public class Seats {
     public static final String TYPE = "seat_type";
     public static final String AIRPLANE = "airplane_id";
     public static final String CAPACITY = "capacity";
-    public static final String RESERVED = "reserved";
+    public static final String RESERVED = "reserved_seats";
 
     private Integer id;
     private SeatType type;
