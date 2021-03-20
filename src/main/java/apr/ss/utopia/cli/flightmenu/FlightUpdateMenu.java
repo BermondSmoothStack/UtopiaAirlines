@@ -13,7 +13,6 @@ public class FlightUpdateMenu implements Menu<String> {
     public FlightUpdateMenu(Flight flight) {
         this.flight = flight;
         while (true) {
-            System.out.flush();
             display();
             System.out.println("Please enter a new Origin Airport or enter N/A for no change.");
             inputs[0] = getMenuSelection();

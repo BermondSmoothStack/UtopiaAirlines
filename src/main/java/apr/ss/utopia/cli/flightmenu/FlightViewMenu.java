@@ -37,7 +37,6 @@ public class FlightViewMenu implements Menu {
 
     @Override
     public void display() {
-        System.out.flush();
         StringBuilder sb = new StringBuilder(
                 "You have chosen to view the Flight with Flight ID: " +
                         flight.getId() +

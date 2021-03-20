@@ -9,7 +9,6 @@ public class FlightMenu implements Menu<Integer> {
 
     public FlightMenu(Flight flight) throws IOException {
         while(true){
-            System.out.flush();
             display();
 
             switch(getMenuSelection()){
@@ -20,7 +19,6 @@ public class FlightMenu implements Menu<Integer> {
                     new FlightUpdateMenu(flight);
                     break;
                 case 3:
-                    // TODO Add Seats
                     new FlightSeatsMenu(flight);
                 case 4:
                     return;

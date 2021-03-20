@@ -3,12 +3,13 @@ package apr.ss.utopia.cli.mainmenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.employeemenu.EmployeeMainMenu;
 
-public class MainMenu implements Menu {
+import java.io.IOException;
 
-    public MainMenu() {
+public class MainMenu implements Menu<Integer> {
+
+    public MainMenu() throws IOException {
         while(true){
             display();
-
             switch(getMenuSelection()){
                 case 1:
                     new EmployeeMainMenu();

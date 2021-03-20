@@ -14,7 +14,6 @@ public class EmployeeFlightMenu implements Menu {
 
     public EmployeeFlightMenu() throws IOException {
         while (true) {
-            System.out.flush();
             display();
             Integer input = getMenuSelection();
             if (input > managedFlights.size())

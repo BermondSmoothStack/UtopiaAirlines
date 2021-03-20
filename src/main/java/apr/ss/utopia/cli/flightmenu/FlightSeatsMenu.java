@@ -10,7 +10,6 @@ public class FlightSeatsMenu implements Menu<Integer> {
     public FlightSeatsMenu(Flight flight) {
         this.flight = flight;
         while (true) {
-            System.out.flush();
             display();
             Seats s = null;
             switch (getMenuSelection()) {
@@ -36,6 +35,7 @@ public class FlightSeatsMenu implements Menu<Integer> {
 
             FlightSeatsInputHandler ih = new FlightSeatsInputHandler(0, 999);
             // TODO: update number of seats
+            // TODO: display updated results
         }
     }
 
@@ -50,6 +50,8 @@ public class FlightSeatsMenu implements Menu<Integer> {
 
     @Override
     public Integer getMenuSelection() {
-        return null;
+        FlightSeatsInputHandler ih = new FlightSeatsInputHandler(1,4);
+        ih.handler();
+        return ih.getVerifiedInput();
     }
 }
