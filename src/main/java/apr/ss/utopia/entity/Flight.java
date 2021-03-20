@@ -10,14 +10,16 @@ public class Flight {
     public final static String ROUTE = "route_id";
     public final static String AIRPLANE = "airplane_id";
     public final static String DEPARTURE = "departure_time";
-    public final static String RESERVED_SEATS = "reserved_seats";
+    public final static String DURATION = "duration_mins";
+//    public final static String RESERVED_SEATS = "reserved_seats"; moved to Seats Table
     public final static String SEAT_PRICE = "seat_price";
 
     private Integer id;
     private Route route;
     private Airplane airplane;
     private LocalDateTime departureTime;
-    private Integer reservedSeats;
+    private Integer duration;
+    //    private Integer reservedSeats; Moved to Seats Table
     private Float seatPrice;
 
     public Integer getId() {
@@ -52,20 +54,20 @@ public class Flight {
         this.departureTime = departureTime;
     }
 
-    public Integer getReservedSeats() {
-        return reservedSeats;
-    }
-
-    public void setReservedSeats(Integer reservedSeats) {
-        this.reservedSeats = reservedSeats;
-    }
-
     public Float getSeatPrice() {
         return seatPrice;
     }
 
     public void setSeatPrice(Float seatPrice) {
         this.seatPrice = seatPrice;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     @Override

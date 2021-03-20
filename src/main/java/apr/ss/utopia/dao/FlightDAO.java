@@ -23,7 +23,8 @@ public class FlightDAO extends BaseDAO<Flight> {
                         Flight.ROUTE + ", " +
                         Flight.AIRPLANE + ", " +
                         Flight.DEPARTURE + ", " +
-                        Flight.RESERVED_SEATS + "," +
+//                        Flight.RESERVED_SEATS + "," + Moved to Seats Table
+                        Flight.DURATION + "," +
                         Flight.SEAT_PRICE + ") " +
                         Flight.NAME + " values (?,?,?,?,?,?)",
                 new Object[]{
@@ -31,7 +32,8 @@ public class FlightDAO extends BaseDAO<Flight> {
                         flight.getRoute().getId(),
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
-                        flight.getReservedSeats(),
+                        flight.getDuration(),
+//                        flight.getReservedSeats(),
                         flight.getSeatPrice()
                 });
     }
@@ -41,14 +43,16 @@ public class FlightDAO extends BaseDAO<Flight> {
                         Flight.ROUTE + " = ?, " +
                         Flight.AIRPLANE + " = ?, " +
                         Flight.DEPARTURE + " = ?, " +
-                        Flight.RESERVED_SEATS + " = ?, " +
+                        Flight.DURATION + " = ?, " +
+//                        Flight.RESERVED_SEATS + " = ?, " + Moved to Seats Table
                         Flight.SEAT_PRICE + " = ? " +
                         "where " + Flight.ID + " = ?",
                 new Object[]{
                         flight.getRoute().getId(),
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
-                        flight.getReservedSeats(),
+                        flight.getDuration(),
+//                        flight.getReservedSeats(),
                         flight.getSeatPrice(),
                         flight.getId()
                 });
@@ -77,8 +81,10 @@ public class FlightDAO extends BaseDAO<Flight> {
             a.setId(rs.getInt(Flight.AIRPLANE));
             r.setId(rs.getInt(Flight.ROUTE));
 
+            f.setId(rs.getInt(Flight.ID));
             f.setAirplane(a);
             f.setRoute(r);
+            f.setDuration(rs.getInt(Flight.DURATION));
             f.setDepartureTime(rs.getTimestamp(Flight.DEPARTURE).toLocalDateTime());
             f.setSeatPrice(rs.getFloat(Flight.SEAT_PRICE));
 
