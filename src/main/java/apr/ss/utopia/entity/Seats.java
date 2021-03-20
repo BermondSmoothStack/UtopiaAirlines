@@ -42,7 +42,7 @@ public class Seats {
     }
 
     public Integer getCapacity() {
-        return capacity;
+        return capacity < 1? 0:capacity;
     }
 
     public void setCapacity(Integer capacity) {

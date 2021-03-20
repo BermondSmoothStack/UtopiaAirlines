@@ -17,11 +17,11 @@ public class FlightMenu implements Menu<Integer> {
                     new FlightViewMenu(flight);
                     break;
                 case 2:
-                    // TODO Update Flight
                     new FlightUpdateMenu(flight);
                     break;
                 case 3:
                     // TODO Add Seats
+                    new FlightSeatsMenu(flight);
                 case 4:
                     return;
                 default:
