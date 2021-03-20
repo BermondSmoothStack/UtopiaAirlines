@@ -5,7 +5,7 @@ import apr.ss.utopia.entity.Flight;
 
 import java.io.IOException;
 
-public class FlightMenu implements Menu {
+public class FlightMenu implements Menu<Integer> {
 
     public FlightMenu(Flight flight) throws IOException {
         while(true){
@@ -14,11 +14,11 @@ public class FlightMenu implements Menu {
 
             switch(getMenuSelection()){
                 case 1:
-                    // TODO: View Flight
                     new FlightViewMenu(flight);
                     break;
                 case 2:
                     // TODO Update Flight
+                    new FlightUpdateMenu(flight);
                     break;
                 case 3:
                     // TODO Add Seats

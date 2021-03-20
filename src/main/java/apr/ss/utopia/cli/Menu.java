@@ -1,8 +1,8 @@
 package apr.ss.utopia.cli;
 
-public interface Menu {
+public interface Menu<T> {
 
     void display();
-    Integer getMenuSelection();
+    T getMenuSelection();
 
 }
