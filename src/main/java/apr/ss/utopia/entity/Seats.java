@@ -7,13 +7,13 @@ public class Seats {
     public static final String NAME = "seats";
     public static final String ID = "id";
     public static final String TYPE = "seat_type";
-    public static final String AIRPLANE = "airplane_id";
+    public static final String AIRPLANE = "flight_id";
     public static final String CAPACITY = "capacity";
     public static final String RESERVED = "reserved_seats";
 
     private Integer id;
     private SeatType type;
-    private Airplane airplane;
+    private Flight flight;
     private Integer capacity;
     private Integer reserved;
 
@@ -33,12 +33,12 @@ public class Seats {
         this.type = type;
     }
 
-    public Airplane getAirplane() {
-        return airplane;
+    public Flight getAirplane() {
+        return flight;
     }
 
-    public void setAirplane(Airplane airplane) {
-        this.airplane = airplane;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
     public Integer getCapacity() {
