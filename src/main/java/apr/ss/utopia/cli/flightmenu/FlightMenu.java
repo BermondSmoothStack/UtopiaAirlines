@@ -3,10 +3,13 @@ package apr.ss.utopia.cli.flightmenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
 
+import java.io.IOException;
+
 public class FlightMenu implements Menu {
 
-    public FlightMenu(Flight flight) {
+    public FlightMenu(Flight flight) throws IOException {
         while(true){
+            System.out.flush();
             display();
 
             switch(getMenuSelection()){

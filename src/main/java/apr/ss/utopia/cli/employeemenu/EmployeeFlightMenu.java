@@ -4,6 +4,7 @@ import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.flightmenu.FlightMenu;
 import apr.ss.utopia.entity.Flight;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,9 @@ public class EmployeeFlightMenu implements Menu {
 
     private List<Flight> managedFlights;
 
-    public EmployeeFlightMenu() {
+    public EmployeeFlightMenu() throws IOException {
         while (true) {
+            System.out.flush();
             display();
             Integer input = getMenuSelection();
             if (input > managedFlights.size())

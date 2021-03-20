@@ -6,6 +6,7 @@ public class EmployeeMainMenu implements Menu {
 
     public EmployeeMainMenu() {
         while (true) {
+            System.out.flush();
             display();
             switch (getMenuSelection()) {
                 case 1:

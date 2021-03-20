@@ -1,6 +1,7 @@
 package apr.ss.utopia.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 public class Flight {
@@ -21,6 +22,7 @@ public class Flight {
     private Integer duration;
     //    private Integer reservedSeats; Moved to Seats Table
     private Float seatPrice;
+    private List<Seats> seats;
 
     public Integer getId() {
         return id;
@@ -68,6 +70,14 @@ public class Flight {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public List<Seats> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seats> seats) {
+        this.seats = seats;
     }
 
     @Override

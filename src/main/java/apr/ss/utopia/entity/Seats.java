@@ -2,9 +2,9 @@ package apr.ss.utopia.entity;
 
 import java.util.Objects;
 
-public class Seat {
+public class Seats {
 
-    public static final String NAME = "seat";
+    public static final String NAME = "seats";
     public static final String ID = "id";
     public static final String TYPE = "seat_type";
     public static final String AIRPLANE = "airplane_id";
@@ -65,8 +65,8 @@ public class Seat {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Seat seat = (Seat) o;
-        return id.equals(seat.id);
+        Seats seats = (Seats) o;
+        return id.equals(seats.id);
     }
 
     @Override
