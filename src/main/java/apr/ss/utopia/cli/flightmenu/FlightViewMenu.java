@@ -8,7 +8,7 @@ import apr.ss.utopia.inputhandler.IntInputHandler;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class FlightViewMenu implements Menu {
+public class FlightViewMenu implements Menu<Integer> {
 
     private final Flight flight;
 

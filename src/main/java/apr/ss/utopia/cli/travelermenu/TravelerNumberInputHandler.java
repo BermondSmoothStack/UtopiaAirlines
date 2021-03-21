@@ -34,7 +34,7 @@ public class TravelerNumberInputHandler extends AbsIntInputHandler {
 
     @Override
     protected Integer getMin() {
-        return 1;
+        return -1;
     }
 
     @Override
