@@ -11,11 +11,10 @@ public class AirportDelete extends AbsCRUD {
     @Override
     protected void display() throws SQLException {
         Airport a = new Airport();
-        StringInputHandler sih = new StringInputHandler();
 
         System.out.println("Delete Airport:\n" +
                 "Enter an IATA Code: ");
-        a.setAirportCode(sih.getInput());
+        a.setAirportCode(new StringInputHandler().getVerifiedInput());
         // TODO: call delete airport service
     }
 }

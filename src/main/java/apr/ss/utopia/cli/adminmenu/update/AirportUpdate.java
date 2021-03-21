@@ -11,13 +11,12 @@ public class AirportUpdate extends AbsCRUD {
     @Override
     protected void display() throws SQLException {
         Airport a = new Airport();
-        StringInputHandler sih = new StringInputHandler();
 
         System.out.println("Updating an Airport:\n" +
                 "Enter an IATA Code: ");
-        a.setAirportCode(sih.getInput());
+        a.setAirportCode(new StringInputHandler().getVerifiedInput());
         System.out.println("Enter the City of the Airport:");
-        a.setCity(sih.getInput());
+        a.setCity(new StringInputHandler().getVerifiedInput());
         // TODO: call update airport service
     }
 }

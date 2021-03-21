@@ -14,6 +14,7 @@ public abstract class AbsCRUD {
         while (true) {
             try {
                 display();
+                return;
             } catch (SQLException e) {
                 System.out.println("Process failed. Try again? [Y/N]");
                 StringInputHandler sih = new StringInputHandler();

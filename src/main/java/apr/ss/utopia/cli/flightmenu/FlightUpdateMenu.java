@@ -1,45 +1,114 @@
 package apr.ss.utopia.cli.flightmenu;
 
 import apr.ss.utopia.cli.Menu;
+import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.entity.Route;
 import apr.ss.utopia.inputhandler.StringInputHandler;
+
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoUnit;
 
 public class FlightUpdateMenu implements Menu<String> {
 
     private final String QUIT = "quit";
     private final String NA = "n/a";
     private Flight flight;
-    private String[] inputs;
 
     public FlightUpdateMenu(Flight flight) {
         this.flight = flight;
+        String input = "";
+        Boolean proceed = false;
         while (true) {
             display();
-            System.out.println("Please enter a new Origin Airport or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Origin City or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Destination Airport or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Destination City or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Departure Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Departure Time (24h Format) or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Arrival Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Arrival Time (24h Format) or enter " + NA + " for no change.");
-            inputs[0] = getMenuSelection();
-            if (inputs[0].equalsIgnoreCase(QUIT)) return;
 
+            while (!proceed) {
+                System.out.println("Please enter a new Origin Airport or enter " + NA + " for no change.");
+                input = getMenuSelection();
+                if (input.equalsIgnoreCase(QUIT)) return;
+                if (!NA.equalsIgnoreCase(input)) {
+                    Route or = flight.getRoute();
+                    Airport oa = null;
+                    // TODO: fetch airport
+                    if (null == oa) {
+                        System.out.println("Can't find Airport!");
+                    } else {
+                        or.setOriginAirport(oa);
+                        flight.setRoute(or);
+                        proceed = true;
+                    }
+                } else proceed = true;
+            }
+
+            proceed = false;
+            while (!proceed) {
+                System.out.println("Please enter a new Destination Airport or enter " + NA + " for no change.");
+                input = getMenuSelection();
+                if (input.equalsIgnoreCase(QUIT)) return;
+                if (!NA.equalsIgnoreCase(input)) {
+                    Route dr = flight.getRoute();
+                    Airport da = null;
+                    // TODO: fetch airport
+                    if (null == da) {
+                        System.out.println("Can't find Airport");
+                    } else {
+                        dr.setDestinationAirport(da);
+                        flight.setRoute(dr);
+                        proceed = true;
+                    }
+                } else proceed = true;
+            }
+            proceed = false;
+            while (!proceed){
+                System.out.println("Please enter a new Departure Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
+                String dateStr = getMenuSelection();
+                if (NA.equalsIgnoreCase(dateStr)) break;
+                if (QUIT.equalsIgnoreCase(dateStr)) return;
+
+                System.out.println("Please enter a new Departure Time (24h Format) or enter " + NA + " for no change.");
+                String timeStr = getMenuSelection();
+                if (NA.equalsIgnoreCase(timeStr)) break;
+                if (QUIT.equalsIgnoreCase(timeStr)) return;
+
+                String dateTimeStr = dateStr + " " + timeStr;
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm").withResolverStyle(ResolverStyle.STRICT);
+                try {
+                    LocalDateTime date = LocalDateTime.parse(dateTimeStr, dtf);
+                    flight.setDepartureTime(date);
+                    proceed = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Date and time given was invalid, try again.");
+                }
+            }
+
+            proceed = false;
+            while (!proceed){
+                System.out.println("Please enter a new Arrival Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
+                String dateStr = getMenuSelection();
+                if (NA.equalsIgnoreCase(dateStr)) break;
+                if (QUIT.equalsIgnoreCase(dateStr)) return;
+
+                System.out.println("Please enter a new Arrival Time (24h Format) or enter " + NA + " for no change.");
+                String timeStr = getMenuSelection();
+                if (NA.equalsIgnoreCase(timeStr)) break;
+                if (QUIT.equalsIgnoreCase(timeStr)) return;
+
+                String dateTimeStr = dateStr + " " + timeStr;
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm").withResolverStyle(ResolverStyle.STRICT);
+                try {
+                    LocalDateTime date = LocalDateTime.parse(dateTimeStr, dtf);
+                    LocalDateTime fromDate = flight.getDepartureTime();
+                    Integer duration = Math.toIntExact(ChronoUnit.MINUTES.between(fromDate, date));
+                    flight.setDuration(duration);
+                    proceed = true;
+                } catch (DateTimeParseException e) {
+                    System.out.println("Date and time given was invalid, try again.");
+                }
+            }
             // TODO: Process inputs for an update
 
         }
@@ -47,11 +116,11 @@ public class FlightUpdateMenu implements Menu<String> {
 
     @Override
     public void display() {
-        System.out.println("You have chosen to update the Flight with " +
-                "Flight ID: " + flight.getId() + " and " +
-                "Flight Origin: " + flight.getRoute().getOriginAirport().getCity() + " and " +
-                "Flight Destination: " + flight.getRoute().getDestinationAirport().getCity() + ". \n" +
-                "Enter ‘quit’ at any prompt to cancel operation.");
+        System.out.println("You have chosen to update the Flight with" +
+                "\nFlight ID: " + flight.getId() + " and " +
+                "\nFlight Origin: " + flight.getRoute().getOriginAirport().getCity() + " and " +
+                "\nFlight Destination: " + flight.getRoute().getDestinationAirport().getCity() + ". \n" +
+                "\nEnter ‘quit’ at any prompt to cancel operation.");
     }
 
     @Override

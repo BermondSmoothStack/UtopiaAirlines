@@ -14,10 +14,13 @@ public class Airport {
     private List<Route> routes;
 
     public String getAirportCode() {
-        return airportCode;
+        return null == airportCode ? "" : airportCode;
     }
 
     public void setAirportCode(String airportCode) {
+        if (airportCode.length() < 3) {
+            airportCode += "00";
+        }
         this.airportCode = airportCode.substring(0, 2).toUpperCase();
     }
 
@@ -35,6 +38,11 @@ public class Airport {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return airportCode + " " + city;
     }
 
     @Override

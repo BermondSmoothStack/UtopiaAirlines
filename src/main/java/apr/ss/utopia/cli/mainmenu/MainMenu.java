@@ -7,10 +7,11 @@ import apr.ss.utopia.cli.travelermenu.TravelerMainMenu;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class MainMenu implements Menu<Integer> {
 
-    public MainMenu() throws IOException {
+    public MainMenu() throws IOException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         while (true) {
             display();
             switch (getMenuSelection()) {

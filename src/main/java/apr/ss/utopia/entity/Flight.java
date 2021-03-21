@@ -88,6 +88,10 @@ public class Flight {
         this.reservedSeats = reservedSeats;
     }
 
+    public LocalDateTime getArrivalTime(){
+        return departureTime.plusMinutes(duration);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

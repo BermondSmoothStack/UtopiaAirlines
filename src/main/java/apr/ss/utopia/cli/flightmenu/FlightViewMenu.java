@@ -26,16 +26,6 @@ public class FlightViewMenu implements Menu {
         return dateTime.getHour() + ":" + dateTime.getMinute();
     }
 
-    private String getDate(LocalDateTime dateTime, Integer mins) {
-        dateTime = dateTime.plusMinutes(mins);
-        return dateTime.getMonth().toString() + " " + dateTime.getDayOfMonth() + ", " + dateTime.getYear();
-    }
-
-    private String getTime(LocalDateTime dateTime, Integer mins) {
-        dateTime = dateTime.plusMinutes(mins);
-        return dateTime.getHour() + ":" + dateTime.getMinute();
-    }
-
     @Override
     public void display() {
         StringBuilder sb = new StringBuilder(
@@ -50,8 +40,8 @@ public class FlightViewMenu implements Menu {
                         "Departure Date: " + getDate(flight.getDepartureTime()) + "\t|\t" +
                         "Departure Time: " + getTime(flight.getDepartureTime()) +
                         "|\n" +
-                        "Arrival Date: " + getDate(flight.getDepartureTime(), flight.getDuration()) + "\t|\t" +
-                        "Arrival Time: " + getTime(flight.getDepartureTime(), flight.getDuration()) +
+                        "Arrival Date: " + getDate(flight.getArrivalTime()) + "\t|\t" +
+                        "Arrival Time: " + getTime(flight.getArrivalTime()) +
                         "\n\n" +
                         "Available Seats by Class:\n");
 

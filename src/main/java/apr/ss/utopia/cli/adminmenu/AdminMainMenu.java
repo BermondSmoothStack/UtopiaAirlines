@@ -1,11 +1,21 @@
 package apr.ss.utopia.cli.adminmenu;
 
 import apr.ss.utopia.cli.Menu;
+import apr.ss.utopia.cli.adminmenu.create.AirportCreate;
+import apr.ss.utopia.cli.adminmenu.create.TicketsCreate;
+import apr.ss.utopia.cli.adminmenu.delete.AirportDelete;
+import apr.ss.utopia.cli.adminmenu.delete.TicketsDelete;
+import apr.ss.utopia.cli.adminmenu.read.AirportView;
+import apr.ss.utopia.cli.adminmenu.read.TicketsView;
+import apr.ss.utopia.cli.adminmenu.update.AirportUpdate;
+import apr.ss.utopia.cli.adminmenu.update.TicketsUpdate;
 import apr.ss.utopia.inputhandler.IntInputHandler;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class AdminMainMenu implements Menu<Integer> {
 
-    public AdminMainMenu() {
+    public AdminMainMenu() throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         while(true){
             display();
             switch(getMenuSelection()){
@@ -16,10 +26,10 @@ public class AdminMainMenu implements Menu<Integer> {
                     new AdminSeatMenu();
                     break;
                 case 3:
-                    new AdminPassengerMenu();
+                    new AdminCrudMenu(new Class[]{TicketsCreate.class, TicketsView.class, TicketsUpdate.class, TicketsDelete.class});
                     break;
                 case 4:
-                    new AdminAirportMenu();
+                    new AdminCrudMenu(new Class[]{AirportCreate.class, AirportView.class, AirportUpdate.class, AirportDelete.class});
                     break;
                 case 5:
                     new AdminTravelersMenu();

@@ -1,30 +1,27 @@
 package apr.ss.utopia.cli.adminmenu;
 
 import apr.ss.utopia.cli.Menu;
-import apr.ss.utopia.cli.adminmenu.create.AirportCreate;
-import apr.ss.utopia.cli.adminmenu.delete.AirportDelete;
-import apr.ss.utopia.cli.adminmenu.read.AirportView;
-import apr.ss.utopia.cli.adminmenu.update.AirportUpdate;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 
-public class AdminAirportMenu implements Menu<Integer> {
+import java.lang.reflect.InvocationTargetException;
 
-    public AdminAirportMenu() {
+public class AdminCrudMenu implements Menu<Integer> {
 
+    public AdminCrudMenu(Class<AbsCRUD>[] c) throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         while (true) {
             display();
             switch (getMenuSelection()) {
                 case 1:
-                    new AirportCreate();
+                    c[0].getConstructor().newInstance();
                     break;
                 case 2:
-                    new AirportView();
+                    c[1].getConstructor().newInstance();
                     break;
                 case 3:
-                    new AirportUpdate();
+                    c[2].getConstructor().newInstance();
                     break;
                 case 4:
-                    new AirportDelete();
+                    c[3].getConstructor().newInstance();
                     break;
                 case 5:
                     return;
@@ -35,11 +32,11 @@ public class AdminAirportMenu implements Menu<Integer> {
     @Override
     public void display() {
 
-        System.out.println("Airport Menu. Please enter a procedure.\n" +
-                "[1] Create" +
-                "[2] View" +
-                "[3] Update" +
-                "[4] Delete" +
+        System.out.println("Menu. Please enter a procedure.\n" +
+                "[1] Create\n" +
+                "[2] View\n" +
+                "[3] Update\n" +
+                "[4] Delete\n" +
                 "[5] Back to previous menu"
         );
 
