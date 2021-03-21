@@ -3,6 +3,7 @@ package apr.ss.utopia.cli.flightmenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Seats;
+import apr.ss.utopia.inputhandler.IntInputHandler;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -65,6 +66,8 @@ public class FlightViewMenu implements Menu {
 
     @Override
     public Integer getMenuSelection() {
-        return null;
+        IntInputHandler ih = new IntInputHandler(0, 0);
+        ih.handler();
+        return ih.getVerifiedInput();
     }
 }

@@ -1,6 +1,7 @@
 package apr.ss.utopia.cli.mainmenu;
 
 import apr.ss.utopia.cli.Menu;
+import apr.ss.utopia.cli.adminmenu.AdminMainMenu;
 import apr.ss.utopia.cli.employeemenu.EmployeeMainMenu;
 import apr.ss.utopia.cli.travelermenu.TravelerMainMenu;
 import apr.ss.utopia.inputhandler.IntInputHandler;
@@ -10,15 +11,15 @@ import java.io.IOException;
 public class MainMenu implements Menu<Integer> {
 
     public MainMenu() throws IOException {
-        while(true){
+        while (true) {
             display();
-            switch(getMenuSelection()){
+            switch (getMenuSelection()) {
                 case 1:
                     new EmployeeMainMenu();
                     // TODO: Employee path
                     break;
                 case 2:
-
+                    new AdminMainMenu();
                     // TODO: Administrator path
                     break;
                 case 3:
@@ -41,7 +42,7 @@ public class MainMenu implements Menu<Integer> {
     }
 
     public Integer getMenuSelection() {
-        IntInputHandler ih = new IntInputHandler(1,3);
+        IntInputHandler ih = new IntInputHandler(1, 3);
         ih.handler();
         return ih.getVerifiedInput();
     }
