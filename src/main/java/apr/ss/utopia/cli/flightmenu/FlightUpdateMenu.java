@@ -7,6 +7,7 @@ import apr.ss.utopia.inputhandler.StringInputHandler;
 public class FlightUpdateMenu implements Menu<String> {
 
     private final String QUIT = "quit";
+    private final String NA = "n/a";
     private Flight flight;
     private String[] inputs;
 
@@ -14,28 +15,28 @@ public class FlightUpdateMenu implements Menu<String> {
         this.flight = flight;
         while (true) {
             display();
-            System.out.println("Please enter a new Origin Airport or enter N/A for no change.");
+            System.out.println("Please enter a new Origin Airport or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Origin City or enter N/A for no change.");
+            System.out.println("Please enter a new Origin City or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Destination Airport or enter N/A for no change.");
+            System.out.println("Please enter a new Destination Airport or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Destination City or enter N/A for no change.");
+            System.out.println("Please enter a new Destination City or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Departure Date (mm-dd-yyyy Format) or enter N/A for no change.");
+            System.out.println("Please enter a new Departure Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Departure Time (24h Format) or enter N/A for no change.");
+            System.out.println("Please enter a new Departure Time (24h Format) or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Arrival Date (mm-dd-yyyy Format) or enter N/A for no change.");
+            System.out.println("Please enter a new Arrival Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
-            System.out.println("Please enter a new Arrival Time (24h Format) or enter N/A for no change.");
+            System.out.println("Please enter a new Arrival Time (24h Format) or enter " + NA + " for no change.");
             inputs[0] = getMenuSelection();
             if (inputs[0].equalsIgnoreCase(QUIT)) return;
 

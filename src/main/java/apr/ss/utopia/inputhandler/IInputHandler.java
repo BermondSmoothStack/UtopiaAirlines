@@ -1,10 +1,10 @@
 package apr.ss.utopia.inputhandler;
 
-public interface IInputHandler {
+public interface IInputHandler<T> {
 
-    Object scanInput();
+    T scanInput();
 
-    Object getInput();
+    T getInput();
 
     void handler();
 

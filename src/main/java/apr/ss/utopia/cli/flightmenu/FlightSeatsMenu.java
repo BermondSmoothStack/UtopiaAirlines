@@ -3,6 +3,7 @@ package apr.ss.utopia.cli.flightmenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Seats;
+import apr.ss.utopia.inputhandler.IntInputHandler;
 
 public class FlightSeatsMenu implements Menu<Integer> {
     private Flight flight;
@@ -33,7 +34,7 @@ public class FlightSeatsMenu implements Menu<Integer> {
             System.out.println("Existing number of seats: " + s.getCapacity());
             System.out.println("Enter new number of seats: ");
 
-            FlightSeatsInputHandler ih = new FlightSeatsInputHandler(0, 999);
+            IntInputHandler ih = new IntInputHandler(0, 999);
             // TODO: update number of seats
             // TODO: display updated results
         }
@@ -50,7 +51,7 @@ public class FlightSeatsMenu implements Menu<Integer> {
 
     @Override
     public Integer getMenuSelection() {
-        FlightSeatsInputHandler ih = new FlightSeatsInputHandler(1,4);
+        IntInputHandler ih = new IntInputHandler(1,4);
         ih.handler();
         return ih.getVerifiedInput();
     }

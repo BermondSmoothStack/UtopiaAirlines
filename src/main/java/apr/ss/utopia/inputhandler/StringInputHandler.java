@@ -3,7 +3,7 @@ package apr.ss.utopia.inputhandler;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class StringInputHandler implements IInputHandler{
+public class StringInputHandler implements IInputHandler<String>{
     protected String verifiedInput;
 
     public StringInputHandler(){

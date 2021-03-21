@@ -3,6 +3,7 @@ package apr.ss.utopia.cli.employeemenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.flightmenu.FlightMenu;
 import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.inputhandler.IntInputHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class EmployeeFlightMenu implements Menu {
 
     @Override
     public Integer getMenuSelection() {
-        EmployeeFlightInputHandler ih = new EmployeeFlightInputHandler(managedFlights.size() + 1);
+        IntInputHandler ih = new IntInputHandler(1, managedFlights.size() + 1);
         ih.handler();
         return ih.getVerifiedInput();
     }
