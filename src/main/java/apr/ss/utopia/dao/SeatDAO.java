@@ -1,5 +1,6 @@
 package apr.ss.utopia.dao;
 
+import apr.ss.utopia.entity.AirplaneType;
 import apr.ss.utopia.entity.Seats;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.SeatType;
@@ -65,14 +66,14 @@ public class SeatDAO extends BaseDAO<Seats> {
         List<Seats> seats = new ArrayList<>();
         while (rs.next()) {
             Seats s = new Seats();
-            Flight f = new Flight();
+            AirplaneType at = new AirplaneType();
             SeatType st = new SeatType();
 
-            f.setId(rs.getInt(Seats.AIRPLANE));
+            at.setId(rs.getInt(Seats.AIRPLANE));
             st.setId(rs.getInt(Seats.TYPE));
 
             s.setId(rs.getInt(Seats.ID));
-            s.setFlight(f);
+            s.setAirplaneType(at);
             s.setCapacity(rs.getInt(Seats.CAPACITY));
             s.setReserved(rs.getInt(Seats.RESERVED));
             s.setType(st);
