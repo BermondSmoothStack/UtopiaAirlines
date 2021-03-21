@@ -2,7 +2,6 @@ package apr.ss.utopia.dao;
 
 import apr.ss.utopia.entity.AirplaneType;
 import apr.ss.utopia.entity.Seats;
-import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.SeatType;
 
 import java.sql.Connection;
@@ -27,7 +26,7 @@ public class SeatDAO extends BaseDAO<Seats> {
                         Seats.NAME + " values (?,?,?,?)",
                 new Object[]{
                         seats.getType().getId(),
-                        seats.getAirplane().getId(),
+                        seats.getAirplaneType().getId(),
                         seats.getCapacity(),
                         seats.getReserved(),
                 });
@@ -42,7 +41,7 @@ public class SeatDAO extends BaseDAO<Seats> {
                         "where " + Seats.ID + " = ?",
                 new Object[]{
                         seats.getType().getId(),
-                        seats.getAirplane().getId(),
+                        seats.getAirplaneType().getId(),
                         seats.getCapacity(),
                         seats.getReserved(),
                         seats.getId()

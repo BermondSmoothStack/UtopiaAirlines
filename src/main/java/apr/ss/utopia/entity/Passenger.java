@@ -19,7 +19,7 @@ public class Passenger {
     private Booking booking;
     private String givenName;
     private String familyName;
-    private LocalDateTime dob;
+    private LocalDate dob;
     private String gender;
     private String address;
 
@@ -55,11 +55,11 @@ public class Passenger {
         this.familyName = familyName;
     }
 
-    public LocalDateTime getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(LocalDateTime dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 

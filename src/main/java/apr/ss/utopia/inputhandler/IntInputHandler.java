@@ -1,6 +1,6 @@
 package apr.ss.utopia.inputhandler;
 
-public class IntInputHandler extends AbsIntInputHandler{
+public class IntInputHandler extends AbsIntInputHandler {
 
     public IntInputHandler(Integer min, Integer max) {
         this.min = min;
@@ -19,6 +19,6 @@ public class IntInputHandler extends AbsIntInputHandler{
 
     @Override
     public void handler() {
-    verifiedInput=  getInput();
+        verifiedInput = getInput();
     }
 }

@@ -6,7 +6,7 @@ import apr.ss.utopia.entity.Passenger;
 import apr.ss.utopia.inputhandler.StringInputHandler;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -52,7 +52,7 @@ public class TicketsUpdate extends AbsCRUD {
                 System.out.println("Enter new Date of Birth (MM-dd-yyyy):");
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy").withResolverStyle(ResolverStyle.STRICT);
                 try {
-                    LocalDateTime dob = LocalDateTime.parse(new StringInputHandler().getVerifiedInput(), dtf);
+                    LocalDate dob = LocalDate.from(dtf.parse(new StringInputHandler().getVerifiedInput()));
                     p.setDob(dob);
                     break;
                 } catch (DateTimeParseException e) {

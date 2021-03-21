@@ -6,6 +6,7 @@ import apr.ss.utopia.entity.Passenger;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class PassengerDAO extends BaseDAO<Passenger> {
                         passenger.getBooking().getId(),
                         passenger.getGivenName(),
                         passenger.getFamilyName(),
-                        java.sql.Date.valueOf(passenger.getDob().toLocalDate()),
+                        java.sql.Date.valueOf(passenger.getDob()),
                         passenger.getGender(),
                         passenger.getAddress()
                 });
@@ -47,7 +48,7 @@ public class PassengerDAO extends BaseDAO<Passenger> {
                         passenger.getBooking().getId(),
                         passenger.getGivenName(),
                         passenger.getFamilyName(),
-                        java.sql.Date.valueOf(passenger.getDob().toLocalDate()),
+                        java.sql.Date.valueOf(passenger.getDob()),
                         passenger.getGender(),
                         passenger.getAddress(),
                         passenger.getId()
@@ -81,7 +82,7 @@ public class PassengerDAO extends BaseDAO<Passenger> {
             p.setId(rs.getInt(Passenger.ID));
             p.setGivenName(rs.getString(Passenger.GVN_NAME));
             p.setFamilyName(rs.getString(Passenger.FAM_NAME));
-            p.setDob(rs.getTimestamp(Passenger.DOB).toLocalDateTime());
+            p.setDob(LocalDate.from(rs.getTimestamp(Passenger.DOB).toLocalDateTime()));
             p.setGender(rs.getString(Passenger.GENDER));
             p.setAddress(rs.getString(Passenger.ADDR));
             passengers.add(p);

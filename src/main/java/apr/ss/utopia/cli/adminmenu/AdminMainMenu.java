@@ -2,12 +2,20 @@ package apr.ss.utopia.cli.adminmenu;
 
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.adminmenu.create.AirportCreate;
+import apr.ss.utopia.cli.adminmenu.create.FlightCreate;
+import apr.ss.utopia.cli.adminmenu.create.SeatsCreate;
 import apr.ss.utopia.cli.adminmenu.create.TicketsCreate;
 import apr.ss.utopia.cli.adminmenu.delete.AirportDelete;
+import apr.ss.utopia.cli.adminmenu.delete.FlightDelete;
+import apr.ss.utopia.cli.adminmenu.delete.SeatsDelete;
 import apr.ss.utopia.cli.adminmenu.delete.TicketsDelete;
 import apr.ss.utopia.cli.adminmenu.read.AirportView;
+import apr.ss.utopia.cli.adminmenu.read.FlightView;
+import apr.ss.utopia.cli.adminmenu.read.SeatsView;
 import apr.ss.utopia.cli.adminmenu.read.TicketsView;
 import apr.ss.utopia.cli.adminmenu.update.AirportUpdate;
+import apr.ss.utopia.cli.adminmenu.update.FlightUpdate;
+import apr.ss.utopia.cli.adminmenu.update.SeatsUpdate;
 import apr.ss.utopia.cli.adminmenu.update.TicketsUpdate;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 
@@ -20,10 +28,10 @@ public class AdminMainMenu implements Menu<Integer> {
             display();
             switch(getMenuSelection()){
                 case 1:
-                    new AdminFlightMenu();
+                    new AdminCrudMenu(new Class[]{FlightCreate.class, FlightView.class, FlightUpdate.class, FlightDelete.class});
                     break;
                 case 2:
-                    new AdminSeatMenu();
+                    new AdminCrudMenu(new Class[]{SeatsCreate.class, SeatsView.class, SeatsUpdate.class, SeatsDelete.class});
                     break;
                 case 3:
                     new AdminCrudMenu(new Class[]{TicketsCreate.class, TicketsView.class, TicketsUpdate.class, TicketsDelete.class});

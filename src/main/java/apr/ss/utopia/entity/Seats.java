@@ -33,7 +33,7 @@ public class Seats {
         this.type = type;
     }
 
-    public AirplaneType getAirplane() {
+    public AirplaneType getAirplaneType() {
         return airplaneType;
     }
 
