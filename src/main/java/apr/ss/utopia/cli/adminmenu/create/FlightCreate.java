@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FlightCreate extends AbsCRUD {
 
@@ -33,27 +34,33 @@ public class FlightCreate extends AbsCRUD {
             System.out.println("\n[" + origCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             origCount++;
         }
+
+        System.out.println("[" + origCount++ + "] Create New Origin");
         System.out.println("[" + origCount + "] Quit");
         IntInputHandler ihO = new IntInputHandler(1, origCount);
         ihO.handler();
         if (ihO.getVerifiedInput() == origCount) return;
-        Airport origin = airportList.get(ihO.getVerifiedInput());
+
+
+        Airport origin = ihO.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihO.getVerifiedInput());
+        airportList = airportList.parallelStream().filter(o -> !o.equals(origin)).collect(Collectors.toList());
 
         System.out.println("Select your destination/arrival port:\n");
         int destCount = 1;
         for (Airport airport : airportList) {
-            if (destCount == ihO.getVerifiedInput()) {
-                destCount++;
-                continue;
-            }
+//            if (destCount == ihO.getVerifiedInput()) {
+//                destCount++;
+//                continue;
+//            }
             System.out.println("\n[" + destCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             destCount++;
         }
+        System.out.println("[" + destCount++ + "] Create New Destination");
         System.out.println("[" + destCount + "] Quit");
         IntInputHandler ihD = new IntInputHandler(1, destCount);
         ihD.handler();
         if (ihD.getVerifiedInput() == destCount) return;
-        Airport destination = airportList.get(ihD.getVerifiedInput());
+        Airport destination = ihO.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihO.getVerifiedInput());
 
         Route route = new Route();
         route.setDestinationAirport(destination);

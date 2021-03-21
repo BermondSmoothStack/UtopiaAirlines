@@ -47,9 +47,9 @@ public class AdminMainMenu implements Menu<Integer> {
                 "[2] Manage Seats\n" +
                 "[3] Manage Tickets and Passengers\n" +
                 "[4] Manage Airports\n" +
-                "[5] Manage Travelers\n" +
-                "[6] Manage Employees\n" +
-                "[7] Over-ride Trip Cancellation for a ticket.");
+                "[5] Manage Users\n" +
+                "[6] Over-ride Trip Cancellation for a ticket.\n" +
+                "[7] Go Back");
     }
 
     @Override

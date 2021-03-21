@@ -15,6 +15,7 @@ public abstract class AbsCRUD {
         while (true) {
             try {
                 display();
+                System.out.println("Finishing procedure... press [Enter] to continue.");
                 System.in.read();
                 return;
             } catch (SQLException e) {

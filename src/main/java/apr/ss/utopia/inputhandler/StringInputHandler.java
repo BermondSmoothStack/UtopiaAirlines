@@ -15,7 +15,7 @@ public class StringInputHandler implements IInputHandler<String>{
         String strInput;
 
         try {
-            strInput = input.next();
+            strInput = input.nextLine();
         } catch (InputMismatchException e){
             System.out.println("Please enter a String");
             strInput = scanInput();

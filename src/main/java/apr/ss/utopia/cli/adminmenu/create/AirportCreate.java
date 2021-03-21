@@ -9,6 +9,8 @@ import java.sql.SQLException;
 
 public class AirportCreate extends AbsCRUD {
 
+    private Airport airport;
+
 
     @Override
     protected void display() throws SQLException {
@@ -21,5 +23,10 @@ public class AirportCreate extends AbsCRUD {
         System.out.println("Enter the City of the new Airport:");
         a.setCity(new StringInputHandler().getVerifiedInput());
         // TODO: call create airport service
+        airport = a;
+    }
+
+    public Airport getAirport() {
+        return airport;
     }
 }

@@ -1,6 +1,7 @@
 package apr.ss.utopia.cli.adminmenu.update;
 
 import apr.ss.utopia.cli.adminmenu.AbsCRUD;
+import apr.ss.utopia.cli.adminmenu.create.AirportCreate;
 import apr.ss.utopia.entity.Airplane;
 import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.entity.Flight;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FlightUpdate extends AbsCRUD {
 
@@ -36,28 +38,39 @@ public class FlightUpdate extends AbsCRUD {
             System.out.println("\n[" + origCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             origCount++;
         }
-        System.out.println("[" + origCount + "] Skip");
+        System.out.println("[" + origCount++ + "] Create New Origin");
+        System.out.println("[" + origCount + "] Quit");
         IntInputHandler ihO = new IntInputHandler(1, origCount);
         ihO.handler();
-        Airport origin = flight.getRoute().getOriginAirport();
-        if (ihO.getVerifiedInput() == origCount) origin = airportList.get(ihO.getVerifiedInput());
 
+        Airport origin = ihO.getVerifiedInput() == origCount - 1 ?
+                new AirportCreate().getAirport() :
+                ihO.getVerifiedInput() == origCount ?
+                        flight.getRoute().getOriginAirport() :
+                        airportList.get(ihO.getVerifiedInput());
+
+        Airport finalOrigin = origin;
+        airportList = airportList.parallelStream().filter(o -> !o.equals(finalOrigin)).collect(Collectors.toList());
         System.out.println("Current registered airport: " + flight.getRoute().getDestinationAirport().toString());
         System.out.println("Select your destination/arrival port:\n");
         int destCount = 1;
         for (Airport airport : airportList) {
-            if (destCount == ihO.getVerifiedInput()) {
-                destCount++;
-                continue;
-            }
+//            if (destCount == ihO.getVerifiedInput()) {
+//                destCount++;
+//                continue;
+//            }
             System.out.println("\n[" + destCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             destCount++;
         }
         System.out.println("[" + destCount + "] Skip");
         IntInputHandler ihD = new IntInputHandler(1, destCount);
         ihD.handler();
-        Airport destination = flight.getRoute().getDestinationAirport();
-        if (ihD.getVerifiedInput() != destCount) destination = airportList.get(ihD.getVerifiedInput());
+
+        Airport destination = ihO.getVerifiedInput() == destCount - 1 ?
+                new AirportCreate().getAirport() :
+                ihO.getVerifiedInput() == destCount ?
+                        flight.getRoute().getDestinationAirport() :
+                        airportList.get(ihO.getVerifiedInput());
 
         route.setDestinationAirport(destination);
         route.setOriginAirport(origin);

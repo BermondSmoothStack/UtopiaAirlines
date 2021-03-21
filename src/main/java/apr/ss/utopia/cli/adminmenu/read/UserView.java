@@ -1,7 +1,6 @@
 package apr.ss.utopia.cli.adminmenu.read;
 
 import apr.ss.utopia.cli.adminmenu.AbsCRUD;
-import apr.ss.utopia.entity.Passenger;
 import apr.ss.utopia.entity.User;
 
 import java.sql.SQLException;
