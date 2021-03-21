@@ -1,7 +1,7 @@
 package apr.ss.utopia.cli.employeemenu;
 
 import apr.ss.utopia.cli.Menu;
-import apr.ss.utopia.cli.flightmenu.SelectFlightMenu;
+import apr.ss.utopia.cli.flightmenu.FlightSelectMenu;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class EmployeeMainMenu implements Menu<Integer> {
             switch (getMenuSelection()) {
                 case 1:
                     // TODO: Employee Flight path
-                    new SelectFlightMenu("Please select a flight");
+                    new FlightSelectMenu("Please select a flight");
                     break;
                 case 2:
                     return;

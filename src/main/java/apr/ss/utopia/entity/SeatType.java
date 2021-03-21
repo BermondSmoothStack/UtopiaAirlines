@@ -8,6 +8,10 @@ public class SeatType {
     public static final String TYPE = "name";
     public static final String ID = "id";
 
+    public static final String FIRST_CLASS = "first";
+    public static final String BUSINESS_CLASS = "business";
+    public static final String ECONOMY_CLASS = "economy";
+
     private Integer id;
     private String name;
 
