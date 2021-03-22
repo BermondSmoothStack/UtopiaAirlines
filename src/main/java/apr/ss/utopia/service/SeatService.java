@@ -92,4 +92,17 @@ public class SeatService {
         }
         return null;
     }
+
+    public void updateSeat(Seats seats) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            SeatDAO seatDAO = new SeatDAO(conn);
+            seatDAO.updateSeat(seats);
+            conn.commit();
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println("Seat Update Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+    }
 }
