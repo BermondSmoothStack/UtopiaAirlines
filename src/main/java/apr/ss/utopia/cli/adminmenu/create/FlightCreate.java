@@ -31,7 +31,7 @@ public class FlightCreate extends AbsCRUD {
         System.out.println("Creating new Flights.\n");
 
         System.out.println("Select your departure/origin port:\n");
-        List<Airport> airportList = new AirportService().fetchAllAirports(); // TODO: Fetch airports
+        List<Airport> airportList = new AirportService().fetchAllAirports();
         int origCount = 1;
         for (Airport airport : airportList) {
             System.out.println("[" + origCount + "] " + airport.toString());

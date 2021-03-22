@@ -17,7 +17,6 @@ public class SeatsDelete extends AbsCRUD {
         String code = new StringInputHandler().getVerifiedInput();
         Seats seat = new Seats();
         seat.setId(Integer.parseInt(code));
-        // TODO: call delete seat service
         SeatService ss = new SeatService();
         if (ss.deleteSeat(seat)) System.out.println("Delete successful");
         else System.out.println("Delete failed...");

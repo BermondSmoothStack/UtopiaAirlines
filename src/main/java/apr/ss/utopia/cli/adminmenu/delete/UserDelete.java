@@ -26,6 +26,5 @@ public class UserDelete extends AbsCRUD {
             if (us.deleteUserById(user)) System.out.println("Delete Successful");
             else System.out.println("Delete failed...");
         }
-        // TODO: call delete user service
     }
 }
