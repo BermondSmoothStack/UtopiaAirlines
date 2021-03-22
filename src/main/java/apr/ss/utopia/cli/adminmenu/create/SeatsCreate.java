@@ -18,7 +18,7 @@ public class SeatsCreate extends AbsCRUD {
     @Override
     protected void display() throws SQLException {
         Seats seats = new Seats();
-        SeatType seatType
+        SeatType seatType;
         System.out.println("Creating new Seat.");
         System.out.println("Enter Seat Type:\n" +
                 "[1] First Class\n" +
