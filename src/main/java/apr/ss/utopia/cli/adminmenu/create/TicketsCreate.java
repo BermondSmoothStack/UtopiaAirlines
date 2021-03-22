@@ -46,43 +46,31 @@ public class TicketsCreate extends AbsCRUD {
             }
         }
 
-        System.out.println("Do you have an existing Passenger [Y/N]");
-        String hasPassengerInput = new StringInputHandler().getVerifiedInput();
+        System.out.println("Creating a new Passenger.");
+        System.out.println("Enter Given Name:");
+        p.setGivenName(new StringInputHandler().getVerifiedInput());
+        System.out.println("Enter Family Name:");
+        p.setFamilyName(new StringInputHandler().getVerifiedInput());
 
-        if (!"Y".equalsIgnoreCase(hasPassengerInput)) {
-            System.out.println("Creating a new Passenger.");
-            System.out.println("Enter Given Name:");
-            p.setGivenName(new StringInputHandler().getVerifiedInput());
-            System.out.println("Enter Family Name:");
-            p.setFamilyName(new StringInputHandler().getVerifiedInput());
-
-            while (true) {
-                System.out.println("Enter Date of Birth (MM-dd-yyyy):");
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-uuuu").withResolverStyle(ResolverStyle.STRICT);
-                try {
-                    LocalDate dob = LocalDate.from(dtf.parse(new StringInputHandler().getVerifiedInput()));
-                    p.setDob(dob);
-                    break;
-                } catch (DateTimeParseException e) {
-                    System.out.println("Date wasn't properly formatted, try again.");
-                }
+        while (true) {
+            System.out.println("Enter Date of Birth (MM-dd-yyyy):");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-uuuu").withResolverStyle(ResolverStyle.STRICT);
+            try {
+                LocalDate dob = LocalDate.from(dtf.parse(new StringInputHandler().getVerifiedInput()));
+                p.setDob(dob);
+                break;
+            } catch (DateTimeParseException e) {
+                System.out.println("Date wasn't properly formatted, try again.");
             }
-            System.out.println("Enter Gender:");
-            p.setGender(new StringInputHandler().getVerifiedInput());
-            System.out.println("Enter Address:");
-            p.setAddress(new StringInputHandler().getVerifiedInput());
-            p.setBooking(b);
-            p = new PassengerService().createPassenger(p);
-            if (null == p || null == p.getId() || p.getId() < 1){
-                System.out.println("Passenger Creation Failed, please try again.");
-            } else System.out.println("Ticket Created. Confirmation code is: " + p.getBooking().getConfirmationCode() );
-        } else {
-            System.out.println("Input passenger ID: ");
-            String passengerIdInput = new StringInputHandler().getVerifiedInput();
-            p = new PassengerService().getPassengerById(Integer.parseInt(passengerIdInput));
-            if (null == p) System.out.println("Passenger lookup failed, try again.");
-            else System.out.println("Ticket Created. Confirmation code is: " + p.getBooking().getConfirmationCode() );
-
         }
+        System.out.println("Enter Gender:");
+        p.setGender(new StringInputHandler().getVerifiedInput());
+        System.out.println("Enter Address:");
+        p.setAddress(new StringInputHandler().getVerifiedInput());
+        p.setBooking(b);
+        p = new PassengerService().createPassenger(p);
+        if (null == p || null == p.getId() || p.getId() < 1) {
+            System.out.println("Passenger Creation Failed, please try again.");
+        } else System.out.println("Ticket Created. Confirmation code is: " + p.getBooking().getConfirmationCode());
     }
 }
