@@ -33,8 +33,8 @@ public class BookingDAO extends BaseDAO<Booking> {
                 new Object[]{booking.getActive(), booking.getConfirmationCode(), booking.getId()});
     }
 
-    public void deleteBooking(Booking booking) throws SQLException {
-        save("delete from " + Booking.NAME + " where " + Booking.ID + " = ?", new Object[]{booking.getId()});
+    public boolean deleteBookingByConfirmationCode(Booking booking) throws SQLException {
+        return delete("delete from " + Booking.NAME + " where " + Booking.CONFIRMATION_CODE + " = ?", new Object[]{booking.getConfirmationCode()});
     }
 
     public List<Booking> readAllBooking() throws ClassNotFoundException, SQLException {

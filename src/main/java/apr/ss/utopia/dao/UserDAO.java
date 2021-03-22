@@ -61,8 +61,8 @@ public class UserDAO extends BaseDAO<User> {
                 });
     }
 
-    public void deleteUser(User user) throws SQLException {
-        save("delete from " + User.NAME + " where " + User.ID + " = ?", new Object[]{user.getId()});
+    public boolean deleteUser(User user) throws SQLException {
+        return delete("delete from " + User.NAME + " where " + User.ID + " = ?", new Object[]{user.getId()});
     }
 
     public List<User> readAllUser() throws ClassNotFoundException, SQLException {

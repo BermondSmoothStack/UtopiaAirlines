@@ -1,6 +1,8 @@
 package apr.ss.utopia.service;
 
+import apr.ss.utopia.dao.AirportDAO;
 import apr.ss.utopia.dao.FlightDAO;
+import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.entity.Flight;
 
 import java.sql.Connection;
@@ -24,5 +26,20 @@ public class FlightService {
             System.out.println(e);
         }
         return f;
+    }
+
+    public boolean deleteFlightById(Flight f){
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            FlightDAO flightDAO = new FlightDAO(conn);
+            boolean isSuccess = flightDAO.deleteFlight(f);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

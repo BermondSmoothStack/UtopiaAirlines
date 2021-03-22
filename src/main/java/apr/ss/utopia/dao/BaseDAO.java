@@ -27,6 +27,18 @@ public abstract class BaseDAO <T>{
         return null;
     }
 
+    public boolean delete(String sql, Object[] vals) throws SQLException {
+        PreparedStatement pstmt =
+                conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        int count = 1;
+        for(Object o: vals) {
+            pstmt.setObject(count, o);
+            count++;
+        }
+        pstmt.executeUpdate();
+        return pstmt.getUpdateCount() > 0;
+    }
+
     public List<T> read(String sql, Object[] vals)  throws ClassNotFoundException, SQLException {
         PreparedStatement pstmt =
                 conn.prepareStatement(sql);

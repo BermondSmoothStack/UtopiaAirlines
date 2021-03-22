@@ -46,4 +46,19 @@ public class BookingService {
         }
         return null;
     }
+
+    public boolean deleteBookingByConfirmationCode(Booking booking) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            BookingDAO bookingDAO = new BookingDAO(conn);
+            boolean isSuccess = bookingDAO.deleteBookingByConfirmationCode(booking);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

@@ -1,5 +1,6 @@
 package apr.ss.utopia.service;
 
+import apr.ss.utopia.dao.BookingDAO;
 import apr.ss.utopia.dao.UserDAO;
 import apr.ss.utopia.entity.User;
 
@@ -27,4 +28,18 @@ public class UserService {
         return u;
     }
 
+    public boolean deleteUserById(User user) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            UserDAO userDAO = new UserDAO(conn);
+            boolean isSuccess = userDAO.deleteUser(user);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

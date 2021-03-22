@@ -1,6 +1,7 @@
 package apr.ss.utopia.service;
 
 
+import apr.ss.utopia.dao.AirportDAO;
 import apr.ss.utopia.dao.BookingDAO;
 import apr.ss.utopia.dao.PassengerDAO;
 import apr.ss.utopia.entity.Booking;
@@ -48,5 +49,20 @@ public class PassengerService {
             System.out.println(e);
         }
         return null;
+    }
+
+    public boolean deletePassengerById(Passenger passenger) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            PassengerDAO passengerDAO = new PassengerDAO(conn);
+            boolean isSuccess = passengerDAO.deletePassenger(passenger);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

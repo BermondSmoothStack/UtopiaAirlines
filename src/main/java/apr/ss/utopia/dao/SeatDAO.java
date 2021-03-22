@@ -48,8 +48,8 @@ public class SeatDAO extends BaseDAO<Seats> {
                 });
     }
 
-    public void deleteSeat(Seats seats) throws SQLException {
-        save("delete from " + Seats.NAME + " where " + Seats.ID + " = ?", new Object[]{seats.getId()});
+    public boolean deleteSeat(Seats seats) throws SQLException {
+        return delete("delete from " + Seats.NAME + " where " + Seats.ID + " = ?", new Object[]{seats.getId()});
     }
 
     public List<Seats> readAllSeat() throws ClassNotFoundException, SQLException {

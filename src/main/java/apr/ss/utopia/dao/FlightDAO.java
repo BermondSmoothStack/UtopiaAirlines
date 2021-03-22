@@ -56,8 +56,8 @@ public class FlightDAO extends BaseDAO<Flight> {
                 });
     }
 
-    public void deleteFlight(Flight flight) throws SQLException {
-        save("delete from " + Flight.NAME + " where " + Flight.ID + " = ?", new Object[]{flight.getId()});
+    public boolean deleteFlight(Flight flight) throws SQLException {
+        return delete("delete from " + Flight.NAME + " where " + Flight.ID + " = ?", new Object[]{flight.getId()});
     }
 
     public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {

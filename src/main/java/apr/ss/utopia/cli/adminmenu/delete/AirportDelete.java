@@ -3,6 +3,7 @@ package apr.ss.utopia.cli.adminmenu.delete;
 import apr.ss.utopia.cli.adminmenu.AbsCRUD;
 import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.inputhandler.StringInputHandler;
+import apr.ss.utopia.service.AirportService;
 
 import java.sql.SQLException;
 
@@ -15,6 +16,9 @@ public class AirportDelete extends AbsCRUD {
         System.out.println("Delete Airport:\n" +
                 "Enter an IATA Code: ");
         a.setAirportCode(new StringInputHandler().getVerifiedInput());
-        // TODO: call delete airport service
+        AirportService as = new AirportService();
+        if (as.deleteAirportByCode(a)) System.out.println("Delete successful");
+        else System.out.println("Delete failed...");
+
     }
 }

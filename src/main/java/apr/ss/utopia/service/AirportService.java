@@ -39,7 +39,21 @@ public class AirportService {
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
         }
-
         return new ArrayList<>();
+    }
+
+    public boolean deleteAirportByCode(Airport a){
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            AirportDAO airportDAO = new AirportDAO(conn);
+            boolean isSuccess = airportDAO.deleteAirport(a);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

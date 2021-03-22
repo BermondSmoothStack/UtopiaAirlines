@@ -36,8 +36,8 @@ public class AirportDAO extends BaseDAO<Airport> {
                 });
     }
 
-    public void deleteAirport(Airport airport) throws SQLException {
-        save("delete from " + Airport.NAME + " where " + Airport.CODE + " = ?", new Object[]{airport.getAirportCode()});
+    public boolean deleteAirport(Airport airport) throws SQLException {
+        return delete("delete from " + Airport.NAME + " where " + Airport.CODE + " = ?", new Object[]{airport.getAirportCode()});
     }
 
     public List<Airport> readAllAirport() throws ClassNotFoundException, SQLException {

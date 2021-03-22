@@ -17,15 +17,12 @@ public class MainMenu implements Menu<Integer> {
             switch (getMenuSelection()) {
                 case 1:
                     new EmployeeMainMenu();
-                    // TODO: Employee path
                     break;
                 case 2:
                     new AdminMainMenu();
-                    // TODO: Administrator path
                     break;
                 case 3:
                     new TravelerMainMenu();
-                    // TODO: Traveler path
                     break;
                 default:
                     System.out.println("Input invalid, try again.");

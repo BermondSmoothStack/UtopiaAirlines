@@ -55,8 +55,8 @@ public class PassengerDAO extends BaseDAO<Passenger> {
                 });
     }
 
-    public void deletePassenger(Passenger passenger) throws SQLException {
-        save("delete from " + Passenger.NAME + " where " +
+    public boolean deletePassenger(Passenger passenger) throws SQLException {
+        return delete ("delete from " + Passenger.NAME + " where " +
                         Passenger.ID + " = ?",
                 new Object[]{passenger.getId()});
     }

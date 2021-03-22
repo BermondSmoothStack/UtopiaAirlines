@@ -43,7 +43,7 @@ public class FlightCreate extends AbsCRUD {
         IntInputHandler ihO = new IntInputHandler(1, origCount);
         ihO.handler();
         if (ihO.getVerifiedInput() == origCount) return;
-        Airport origin = ihO.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihO.getVerifiedInput());
+        Airport origin = ihO.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihO.getVerifiedInput() - 1);
         airportList = airportList.parallelStream().filter(o -> !o.equals(origin)).collect(Collectors.toList());
 
         System.out.println("Select your destination/arrival port:\n");
@@ -61,7 +61,7 @@ public class FlightCreate extends AbsCRUD {
         IntInputHandler ihD = new IntInputHandler(1, destCount);
         ihD.handler();
         if (ihD.getVerifiedInput() == destCount) return;
-        Airport destination = ihO.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihO.getVerifiedInput());
+        Airport destination = ihD.getVerifiedInput() == origCount - 1 ? new AirportCreate().getAirport() : airportList.get(ihD.getVerifiedInput() - 1);
 
         Route route = new Route();
         route.setDestinationAirport(destination);
@@ -81,7 +81,7 @@ public class FlightCreate extends AbsCRUD {
         IntInputHandler ihA = new IntInputHandler(1, planeCount);
         ihA.handler();
         if (ihA.getVerifiedInput() == planeCount) return;
-        Airplane a = ihA.getVerifiedInput() == planeCount - 1? new AirplaneCreate().getAirplane() : airplanes.get(ihA.getVerifiedInput()-1);
+        Airplane a = ihA.getVerifiedInput() == planeCount - 1 ? new AirplaneCreate().getAirplane() : airplanes.get(ihA.getVerifiedInput() - 1);
 
 
         while (true) {
@@ -96,7 +96,9 @@ public class FlightCreate extends AbsCRUD {
                 flight.setDepartureTime(departureTime);
                 break;
             } catch (DateTimeParseException e) {
-                System.out.println("Date wasn't properly formatted, try again.");
+                System.out.println("Date wasn't properly formatted, try again. [Y/N]");
+                if (!"Y".equalsIgnoreCase(new StringInputHandler().getVerifiedInput()))
+                    return;
             }
         }
         System.out.println("Enter flight duration in minutes: ");
@@ -125,7 +127,7 @@ public class FlightCreate extends AbsCRUD {
         flight.setDuration(duration);
         flight.setRoute(route);
         flight = new FlightService().createFlight(flight);
-        if (!(null == flight || null == flight.getId())){
+        if (!(null == flight || null == flight.getId())) {
             System.out.println("Flight Creation Successful.");
         }
     }
