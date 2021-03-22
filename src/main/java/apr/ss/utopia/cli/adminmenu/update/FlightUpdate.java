@@ -8,6 +8,9 @@ import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Route;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 import apr.ss.utopia.inputhandler.StringInputHandler;
+import apr.ss.utopia.service.AirplaneService;
+import apr.ss.utopia.service.AirportService;
+import apr.ss.utopia.service.FlightService;
 
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -27,19 +30,23 @@ public class FlightUpdate extends AbsCRUD {
         System.out.println("Update a Flight.\n");
         System.out.println("Enter Flight ID:");
         String idInput = new StringInputHandler().getVerifiedInput();
-        Flight flight = null; // TODO: get flight
+        FlightService fs = new FlightService();
+        Flight flight = new Flight();
+        flight.setId(Integer.parseInt(idInput));
+        flight = fs.fetchFlightById(flight);
         Route route = new Route();
 
         System.out.println("Current registered airport: " + flight.getRoute().getOriginAirport().toString());
         System.out.println("Select your departure/origin port\n");
-        List<Airport> airportList = null; // TODO: Fetch airports
+        AirportService aps = new AirportService();
+        List<Airport> airportList = aps.fetchAllAirports();
         int origCount = 1;
         for (Airport airport : airportList) {
-            System.out.println("\n[" + origCount + "] " + airport.getAirportCode() + " " + airport.getCity());
+            System.out.println("[" + origCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             origCount++;
         }
         System.out.println("[" + origCount++ + "] Create New Origin");
-        System.out.println("[" + origCount + "] Quit");
+        System.out.println("[" + origCount + "] Skip");
         IntInputHandler ihO = new IntInputHandler(1, origCount);
         ihO.handler();
 
@@ -47,10 +54,9 @@ public class FlightUpdate extends AbsCRUD {
                 new AirportCreate().getAirport() :
                 ihO.getVerifiedInput() == origCount ?
                         flight.getRoute().getOriginAirport() :
-                        airportList.get(ihO.getVerifiedInput());
+                        airportList.get(ihO.getVerifiedInput() - 1);
 
-        Airport finalOrigin = origin;
-        airportList = airportList.parallelStream().filter(o -> !o.equals(finalOrigin)).collect(Collectors.toList());
+        airportList = airportList.parallelStream().filter(o -> !o.equals(origin)).collect(Collectors.toList());
         System.out.println("Current registered airport: " + flight.getRoute().getDestinationAirport().toString());
         System.out.println("Select your destination/arrival port:\n");
         int destCount = 1;
@@ -59,30 +65,30 @@ public class FlightUpdate extends AbsCRUD {
 //                destCount++;
 //                continue;
 //            }
-            System.out.println("\n[" + destCount + "] " + airport.getAirportCode() + " " + airport.getCity());
+            System.out.println("[" + destCount + "] " + airport.getAirportCode() + " " + airport.getCity());
             destCount++;
         }
+        System.out.println("[" + destCount++ + "] Create New Origin");
         System.out.println("[" + destCount + "] Skip");
         IntInputHandler ihD = new IntInputHandler(1, destCount);
         ihD.handler();
 
-        Airport destination = ihO.getVerifiedInput() == destCount - 1 ?
+        Airport destination = ihD.getVerifiedInput() == destCount - 1 ?
                 new AirportCreate().getAirport() :
-                ihO.getVerifiedInput() == destCount ?
+                ihD.getVerifiedInput() == destCount ?
                         flight.getRoute().getDestinationAirport() :
-                        airportList.get(ihO.getVerifiedInput());
+                        airportList.get(ihD.getVerifiedInput() - 1);
 
         route.setDestinationAirport(destination);
         route.setOriginAirport(origin);
-        // TODO Create route
 
-        System.out.println("Current registered plane type: " + flight.getAirplane().getType());
+        System.out.println("Current registered plane type: " + flight.getAirplane().getType().getId());
         System.out.println("\nSelect a plane.");
-        // TODO: fetch all planes
-        List<Airplane> airplanes = null;
+        AirplaneService as = new AirplaneService();
+        List<Airplane> airplanes = as.fetchAllAirplane();
         int planeCount = 1;
         for (Airplane a : airplanes) {
-            System.out.println("[" + planeCount + "] ID: " + a.getId() + " Type: " + a.getType());
+            System.out.println("[" + planeCount + "] ID: " + a.getId() + " Type: " + a.getType().getId());
             planeCount++;
         }
         IntInputHandler ihA = new IntInputHandler(1, planeCount);
@@ -97,7 +103,7 @@ public class FlightUpdate extends AbsCRUD {
             System.out.println("Enter departure time:");
             String timeStr = new StringInputHandler().getVerifiedInput();
             String dateTimeStr = dateStr + " " + timeStr;
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy").withResolverStyle(ResolverStyle.STRICT);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT);
             try {
                 LocalDateTime departureTime = LocalDateTime.from(dtf.parse(dateTimeStr));
                 flight.setDepartureTime(departureTime);
@@ -135,6 +141,6 @@ public class FlightUpdate extends AbsCRUD {
         flight.setAirplane(a);
         flight.setDuration(duration);
         flight.setRoute(route);
-        // TODO: Update Flight
+        fs.updateFlight(route,flight);
     }
 }

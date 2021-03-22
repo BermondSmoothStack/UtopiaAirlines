@@ -2,8 +2,10 @@ package apr.ss.utopia.service;
 
 import apr.ss.utopia.dao.AirportDAO;
 import apr.ss.utopia.dao.FlightDAO;
+import apr.ss.utopia.dao.RouteDAO;
 import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.entity.Route;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -30,9 +32,9 @@ public class FlightService {
         return f;
     }
 
-    public List<Flight> fetchAllFlights(){
+    public List<Flight> fetchAllFlights() {
         Connection conn;
-        try{
+        try {
             conn = util.getConnection();
             FlightDAO flightDAO = new FlightDAO(conn);
             return flightDAO.readAllFlight();
@@ -43,7 +45,7 @@ public class FlightService {
         return new ArrayList<>();
     }
 
-    public boolean deleteFlightById(Flight f){
+    public boolean deleteFlightById(Flight f) {
         Connection conn;
         try {
             conn = util.getConnection();
@@ -71,5 +73,28 @@ public class FlightService {
             System.out.println(e);
         }
         return new Flight();
+    }
+
+    public void updateFlight(Route route, Flight flight) {
+        Connection conn;
+
+        try {
+            conn = util.getConnection();
+            FlightDAO flightDAO = new FlightDAO(conn);
+            RouteDAO routeDAO = new RouteDAO(conn);
+            List<Route> rl = routeDAO.findRouteByRoute(route);
+            if (rl.isEmpty())
+                route.setId(routeDAO.addRoute(route));
+            else
+                route = rl.get(0);
+            flight.setRoute(route);
+            flightDAO.updateFlight(flight);
+            conn.commit();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Flight Update Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+
     }
 }
