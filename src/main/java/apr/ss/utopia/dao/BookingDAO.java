@@ -1,6 +1,8 @@
 package apr.ss.utopia.dao;
 
 import apr.ss.utopia.entity.Booking;
+import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.entity.Passenger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -43,6 +45,14 @@ public class BookingDAO extends BaseDAO<Booking> {
 
     public List<Booking> readBookingsByCode(Booking booking) throws ClassNotFoundException, SQLException {
         return read("select * from " + Booking.NAME + " where " + Booking.CONFIRMATION_CODE + " = ?", new Object[]{booking.getConfirmationCode()});
+    }
+
+    public List<Booking> findBookingByPassengerFlight(Flight flight, Passenger passenger) throws SQLException, ClassNotFoundException {
+        return read ("select booking.id, is_active, confirmation_code from booking\n" +
+                "join passenger on passenger.booking_id = booking.id\n" +
+                "join flight_bookings on flight_bookings.booking_id = booking.id\n" +
+                "where passenger.id = ? and flight_bookings.flight_id = ? ",new Object[]{passenger.getId(), flight.getId()});
+
     }
 
     @Override

@@ -2,10 +2,9 @@ package apr.ss.utopia.cli.travelermenu;
 
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.flightmenu.FlightSelectMenu;
-import apr.ss.utopia.entity.FlightBookings;
-import apr.ss.utopia.entity.User;
+import apr.ss.utopia.entity.Passenger;
 import apr.ss.utopia.inputhandler.IntInputHandler;
-import apr.ss.utopia.service.UserService;
+import apr.ss.utopia.service.PassengerService;
 
 import java.io.IOException;
 
@@ -13,14 +12,15 @@ public class TravelerMainMenu implements Menu<Integer> {
 
     public TravelerMainMenu() throws IOException {
         while (true) {
-            if (null == handleMembership()) return;
+            Passenger p = handleMembership();
+            if (null == p) return;
             display();
             switch(getMenuSelection()){
                 case 1:
                     new FlightSelectMenu(FlightSelectMenu.BOOK_METHOD);
                     break;
                 case 2:
-                    new FlightSelectMenu(FlightSelectMenu.CANCEL_METHOD);
+                    new FlightSelectMenu(FlightSelectMenu.CANCEL_METHOD, "", p);
                     break;
                 case 3:
                     return;
@@ -40,18 +40,18 @@ public class TravelerMainMenu implements Menu<Integer> {
 
     }
 
-    private Boolean handleMembership() {
+    private Passenger handleMembership() {
         while (true) {
             TravelerNumberInputHandler tih = new TravelerNumberInputHandler();
             System.out.println("Enter your Membership Number or leave it empty to go back to the previous menu");
             Integer input = tih.getInput();
-            UserService us = new UserService();
-            User user = us.getUserById(input);
+            PassengerService us = new PassengerService();
+            Passenger p = us.getPassengerById(input);
 
             if (input < 0)
                 return null;
-            if ((null != user && null != user.getId())) {
-                return true;
+            if ((null != p && null != p.getId())) {
+                return p;
             }
         }
     }

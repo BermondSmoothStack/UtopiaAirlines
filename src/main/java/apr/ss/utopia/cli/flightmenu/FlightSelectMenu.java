@@ -2,6 +2,7 @@ package apr.ss.utopia.cli.flightmenu;
 
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.entity.Passenger;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 import apr.ss.utopia.service.FlightService;
 
@@ -15,11 +16,7 @@ public class FlightSelectMenu implements Menu<Integer> {
 
     private List<Flight> managedFlights;
 
-    public FlightSelectMenu(String method) throws IOException {
-        this("", method);
-    }
-
-    public FlightSelectMenu(String header, String method) throws IOException {
+    public FlightSelectMenu(String method, String header, Passenger passenger) throws IOException {
         FlightService fs = new FlightService();
         managedFlights = fs.fetchAllFlights();
         while (true) {
@@ -36,11 +33,19 @@ public class FlightSelectMenu implements Menu<Integer> {
                     new FlightMgmtMenu(managedFlights.get(input), FlightMgmtMenu.BOOK_METHOD);
                     break;
                 case CANCEL_METHOD:
-                    new FlightMgmtMenu(managedFlights.get(input), FlightMgmtMenu.CANCEL_METHOD);
+                    new FlightMgmtMenu(managedFlights.get(input), FlightMgmtMenu.CANCEL_METHOD, passenger);
                 default:
                     return;
             }
         }
+    }
+
+    public FlightSelectMenu(String method) throws IOException {
+        this("", method);
+    }
+
+    public FlightSelectMenu(String header, String method) throws IOException {
+        this(method, header, null);
     }
 
     @Override
@@ -52,7 +57,8 @@ public class FlightSelectMenu implements Menu<Integer> {
             System.out.println(item);
             c++;
         }
-        System.out.println("[" + managedFlights.size() + "] Quit to cancel operation.");
+        int i = managedFlights.size() + 1;
+        System.out.println("[" + i + "] Quit to cancel operation.");
     }
 
     @Override

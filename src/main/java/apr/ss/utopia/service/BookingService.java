@@ -3,6 +3,8 @@ package apr.ss.utopia.service;
 
 import apr.ss.utopia.dao.BookingDAO;
 import apr.ss.utopia.entity.Booking;
+import apr.ss.utopia.entity.Flight;
+import apr.ss.utopia.entity.Passenger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -70,6 +72,30 @@ public class BookingService {
             Boolean isSuccess = bookingDAO.updateBooking(b);
             conn.commit();
             return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Booking Update Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public Boolean cancelBooking(Flight flight, Passenger passenger) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            BookingDAO bookingDAO = new BookingDAO(conn);
+            List<Booking> bl = bookingDAO.findBookingByPassengerFlight(flight,passenger);
+            if (null != bl && !bl.isEmpty()){
+                Booking b = bl.get(0);
+                b.setActive(false);
+                Boolean isSuccess = bookingDAO.updateBooking(b);
+                conn.commit();
+                return isSuccess;
+            } else {
+                System.out.println("No booking found from this flight from you.");
+            }
+            return false;
 
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Booking Update Failed! Make sure you entered the correct information.");

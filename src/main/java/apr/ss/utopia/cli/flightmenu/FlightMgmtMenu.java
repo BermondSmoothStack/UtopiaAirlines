@@ -1,22 +1,26 @@
 package apr.ss.utopia.cli.flightmenu;
 
 import apr.ss.utopia.cli.Menu;
-import apr.ss.utopia.entity.Booking;
-import apr.ss.utopia.entity.Flight;
-import apr.ss.utopia.entity.SeatType;
+import apr.ss.utopia.dao.FlightBookingsDAO;
+import apr.ss.utopia.entity.*;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 import apr.ss.utopia.service.BookingService;
+import apr.ss.utopia.service.FlightBookingService;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.UUID;
 
 public class FlightMgmtMenu implements Menu<Integer> {
 
     public static final String BOOK_METHOD = "book";
     public static final String CANCEL_METHOD = "cancel";
     private Flight flight;
+    private Passenger passenger;
 
 
-    public FlightMgmtMenu(Flight flight, String mode) throws IOException {
+    public FlightMgmtMenu(Flight flight, String mode, Passenger passenger) throws IOException {
+        this.passenger = passenger;
         this.flight = flight;
         String type = "";
         while (true) {
@@ -39,13 +43,27 @@ public class FlightMgmtMenu implements Menu<Integer> {
                 default:
             }
             if (mode.equalsIgnoreCase(BOOK_METHOD)) {
-                // TODO: add
+                Booking b = new Booking();
+                String uuid = UUID.randomUUID().toString().replace("-", "");
+                b.setConfirmationCode(uuid);
+                b.setActive(true);
+                try {
+                    FlightBookingService fbs = new FlightBookingService();
+                    fbs.createTicket(flight, b, null);
+                } catch (SQLException e){
+                    System.out.println("Booking failed...");
+                }
+                System.out.println("Booking Successful!");
             } else if (mode.equalsIgnoreCase(CANCEL_METHOD)) {
-                // TODO: remove
+                BookingService bs = new BookingService();
+                if (bs.cancelBooking(flight, passenger)) System.out.println("Booking Cancellation Successful");
             }
 
-            // TODO print out result
         }
+    }
+
+    public FlightMgmtMenu(Flight flight, String mode) throws IOException {
+        this(flight,mode,null);
     }
 
     @Override

@@ -21,8 +21,10 @@ public class FlightBookingService {
 
             if (null == booking.getId())
                 booking.setId(bookingDAO.addBooking(booking));
-            passenger.setBooking(booking);
-            passenger.setId(passengerDAO.addPassenger(passenger));
+            if (null != passenger) {
+                passenger.setBooking(booking);
+                passenger.setId(passengerDAO.addPassenger(passenger));
+            }
 
             FlightBookings fb = new FlightBookings();
             fb.setBooking(booking);
@@ -37,5 +39,7 @@ public class FlightBookingService {
         }
         return null;
     }
+
+
 
 }

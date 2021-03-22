@@ -19,12 +19,12 @@ public abstract class BaseDAO <T>{
             pstmt.setObject(count, o);
             count++;
         }
-        pstmt.executeUpdate();
+        Integer affected = pstmt.executeUpdate();
 		ResultSet rs = pstmt.getGeneratedKeys();
         while(rs.next()) {
             return rs.getInt(1);
         }
-        return -1;
+        return affected;
     }
 
     public boolean delete(String sql, Object[] vals) throws SQLException {
