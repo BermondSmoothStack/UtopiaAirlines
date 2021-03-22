@@ -20,10 +20,9 @@ public abstract class BaseDAO <T>{
             count++;
         }
         pstmt.executeUpdate();
-//		ResultSet rs = pstmt.getGeneratedKeys(); //try this
-        ResultSet rs = pstmt.executeQuery();
+		ResultSet rs = pstmt.getGeneratedKeys();
         while(rs.next()) {
-            return rs.getInt(1);//try 0
+            return rs.getInt(1);
         }
         return null;
     }

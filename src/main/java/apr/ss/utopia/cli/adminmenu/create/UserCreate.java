@@ -5,6 +5,8 @@ import apr.ss.utopia.entity.Role;
 import apr.ss.utopia.entity.User;
 import apr.ss.utopia.inputhandler.IntInputHandler;
 import apr.ss.utopia.inputhandler.StringInputHandler;
+import apr.ss.utopia.service.RolesService;
+import apr.ss.utopia.service.UserService;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -48,8 +50,7 @@ public class UserCreate extends AbsCRUD {
         u.setPhone(input);
 
         System.out.println("Select Role: ");
-        // TODO Fetch all roles
-        List<Role> roleList = null;
+        List<Role> roleList = new RolesService().fetchAllRoles();
         int c = 1;
         for (Role r : roleList) {
             System.out.println("[" + c + "] " + r.getName());
@@ -59,8 +60,10 @@ public class UserCreate extends AbsCRUD {
         IntInputHandler intIh = new IntInputHandler(1, c);
         Integer intInput = intIh.getInput();
         if (c == intInput) return;
-        u.setRole(roleList.get(intInput));
+        u.setRole(roleList.get(intInput-1));
 
-        // TODO: Create user
+        u = new UserService().createUser(u);
+        if (null != u.getId())
+            System.out.println("User Successfully Created");
     }
 }

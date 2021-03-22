@@ -4,6 +4,7 @@ import apr.ss.utopia.entity.Booking;
 import apr.ss.utopia.entity.Passenger;
 import apr.ss.utopia.entity.Role;
 import apr.ss.utopia.entity.User;
+import apr.ss.utopia.service.RolesService;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,22 +12,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO extends BaseDAO<User>{
+public class UserDAO extends BaseDAO<User> {
 
     public UserDAO(Connection conn) {
         super(conn);
     }
 
-    public void addUser(User user) throws SQLException {
-        save("insert into (" +
+    public Integer addUser(User user) throws SQLException {
+        return save("insert into " + User.NAME + " (" +
                         User.ROLE + ", " +
                         User.GVN_NAME + ", " +
                         User.FAM_NAME + ", " +
                         User.USERNAME + ", " +
                         User.EMAIL + ", " +
                         User.PASSWORD + ", " +
-                        User.PHONE + ", " +
-                        ") " + User.NAME + " values (?, ?, ?, ?, ?, ?, ?)",
+                        User.PHONE +
+                        ") values (?, ?, ?, ?, ?, ?, ?)",
                 new Object[]{
                         user.getRole().getId(),
                         user.getGivenName(),
@@ -77,9 +78,10 @@ public class UserDAO extends BaseDAO<User>{
         List<User> users = new ArrayList<>();
         while (rs.next()) {
             User u = new User();
-            Role r = new Role();
-
-            r.setId(rs.getInt(User.ROLE));
+            List<Role> rl = new RolesService().fetchAllRoles();
+            Role rTarget = new Role();
+            rTarget.setId(rs.getInt(User.ROLE));
+            Role r = rl.parallelStream().filter(o -> o.equals(rTarget)).findFirst().get();
 
             u.setRole(r);
             u.setId(rs.getInt(User.ID));
