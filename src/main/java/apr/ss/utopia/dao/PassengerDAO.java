@@ -16,15 +16,15 @@ public class PassengerDAO extends BaseDAO<Passenger> {
         super(conn);
     }
 
-    public void addPassenger(Passenger passenger) throws SQLException {
-        save("insert into (" +
+    public Integer addPassenger(Passenger passenger) throws SQLException {
+        return save("insert into " + Passenger.NAME + " (" +
                         Passenger.BOOKING + ", " +
                         Passenger.GVN_NAME + ", " +
                         Passenger.FAM_NAME + ", " +
                         Passenger.DOB + ", " +
                         Passenger.GENDER + ", " +
-                        Passenger.ADDR + ", " +
-                        ") " + Passenger.NAME + " values (?, ?, ?, ?, ?, ?)",
+                        Passenger.ADDR +
+                        ") " + " values (?, ?, ?, ?, ?, ?)",
                 new Object[]{
                         passenger.getBooking().getId(),
                         passenger.getGivenName(),
@@ -65,7 +65,7 @@ public class PassengerDAO extends BaseDAO<Passenger> {
         return read("select * from " + Passenger.NAME, new Object[]{});
     }
 
-    public List<Passenger> readPassengersByCode(Passenger passenger) throws ClassNotFoundException, SQLException {
+    public List<Passenger> readPassengersById(Passenger passenger) throws ClassNotFoundException, SQLException {
         return read("select * from " + Passenger.NAME + " where " + Passenger.ID + " = ?", new Object[]{passenger.getId()});
     }
 

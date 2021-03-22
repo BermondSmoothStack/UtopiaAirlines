@@ -1,21 +1,17 @@
 package apr.ss.utopia.service;
 
-import apr.ss.utopia.dao.RoleDAO;
 import apr.ss.utopia.dao.UserDAO;
-import apr.ss.utopia.entity.Role;
 import apr.ss.utopia.entity.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserService {
 
     Util util = new Util();
 
     public User createUser(User u) {
-        Connection conn = null;
+        Connection conn;
 
         try {
             conn = util.getConnection();

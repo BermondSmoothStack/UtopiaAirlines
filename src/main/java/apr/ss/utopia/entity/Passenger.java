@@ -1,5 +1,6 @@
 package apr.ss.utopia.entity;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Passenger {
     private Booking booking;
     private String givenName;
     private String familyName;
-    private LocalDate dob;
+    private Date dob;
     private String gender;
     private String address;
 
@@ -56,11 +57,11 @@ public class Passenger {
     }
 
     public LocalDate getDob() {
-        return dob;
+        return dob.toLocalDate();
     }
 
     public void setDob(LocalDate dob) {
-        this.dob = dob;
+        this.dob = Date.valueOf(dob);
     }
 
     public String getGender() {

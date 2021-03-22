@@ -14,11 +14,11 @@ public class BookingDAO extends BaseDAO<Booking> {
         super(conn);
     }
 
-    public void addBooking(Booking booking) throws SQLException {
-        save("insert into (" +
+    public Integer addBooking(Booking booking) throws SQLException {
+        return save("insert into " + Booking.NAME + " (" +
                         Booking.ACTIVE + ", " +
                         Booking.CONFIRMATION_CODE + ") " +
-                        Booking.NAME + " values (?, ?)",
+                        " values (?, ?)",
                 new Object[]{
                         booking.getActive(),
                         booking.getConfirmationCode()
@@ -42,7 +42,7 @@ public class BookingDAO extends BaseDAO<Booking> {
     }
 
     public List<Booking> readBookingsByCode(Booking booking) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Booking.NAME + " where " + Booking.ID + " = ?", new Object[]{booking.getId()});
+        return read("select * from " + Booking.NAME + " where " + Booking.CONFIRMATION_CODE + " = ?", new Object[]{booking.getConfirmationCode()});
     }
 
     @Override

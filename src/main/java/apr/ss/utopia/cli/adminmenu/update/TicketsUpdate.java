@@ -49,7 +49,7 @@ public class TicketsUpdate extends AbsCRUD {
         System.out.println("Change Date of Birth?[Y/N]");
         if ("Y".equalsIgnoreCase(input)) {
             while (true) {
-                System.out.println("Enter new Date of Birth (MM-dd-yyyy):");
+                System.out.println("Enter new Date of Birth (MM-dd-uuuu):");
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy").withResolverStyle(ResolverStyle.STRICT);
                 try {
                     LocalDate dob = LocalDate.from(dtf.parse(new StringInputHandler().getVerifiedInput()));
