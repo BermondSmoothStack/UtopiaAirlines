@@ -42,6 +42,21 @@ public class AirportService {
         return new ArrayList<>();
     }
 
+    public Airport fetchAirportByIATA(Airport a){
+        Connection conn;
+
+        try {
+            conn = util.getConnection();
+            AirportDAO airportDAO = new AirportDAO(conn);
+            List<Airport> rl = airportDAO.readAirportsByCode(a);
+            return rl.get(0);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return new Airport();
+    }
+
     public boolean deleteAirportByCode(Airport a){
         Connection conn;
         try {
