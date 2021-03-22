@@ -15,8 +15,8 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
         super(conn);
     }
 
-    public void addAirplane(Airplane airplane) throws SQLException {
-        save("insert into (" + Airplane.TYPE + ") " + Airplane.NAME + " values (?)", new Object[]{airplane.getType().getId()});
+    public Integer addAirplane(Airplane airplane) throws SQLException {
+        return save("insert into " + Airplane.NAME + " (" + Airplane.TYPE + ") " + " values (?)", new Object[]{airplane.getType().getId()});
     }
 
     public void updateAirplane(Airplane airplane) throws SQLException {
@@ -28,7 +28,15 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
     }
 
     public List<Airplane> readAllAirplane() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Airplane.NAME, null);
+        return read("select " +
+                        Airplane.NAME + "." + Airplane.ID + " as " + Airplane.ID + ", " +
+                        Airplane.TYPE + ", " +
+                        AirplaneType.CAPACITY +
+                        " from " + Airplane.NAME +
+                        " join " + AirplaneType.NAME +
+                        " on " + Airplane.NAME + "." + Airplane.TYPE +
+                        " = " + AirplaneType.NAME + "." + AirplaneType.ID,
+                new Object[]{});
     }
 
     public List<Airplane> readAirportsByCode(Airplane airplane) throws ClassNotFoundException, SQLException {
@@ -42,6 +50,7 @@ public class AirplaneDAO extends BaseDAO<Airplane> {
             Airplane a = new Airplane();
             AirplaneType at = new AirplaneType();
             at.setId(rs.getInt(Airplane.TYPE));
+            at.setCapacity(rs.getInt(AirplaneType.CAPACITY));
             a.setId(rs.getInt(Airplane.ID));
             a.setType(at);
             airplanes.add(a);

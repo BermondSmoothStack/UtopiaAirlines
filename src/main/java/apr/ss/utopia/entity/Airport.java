@@ -21,7 +21,7 @@ public class Airport {
         if (airportCode.length() < 3) {
             airportCode += "00";
         }
-        this.airportCode = airportCode.substring(0, 2).toUpperCase();
+        this.airportCode = airportCode.substring(0, 3).toUpperCase();
     }
 
     public List<Route> getRoutes() {

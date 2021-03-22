@@ -15,12 +15,12 @@ public class RouteDAO extends BaseDAO<Route> {
         super(conn);
     }
 
-    public void addRoute(Route route) throws SQLException {
-        save("insert into (" +
+    public Integer addRoute(Route route) throws SQLException {
+        return save("insert into "
+                        + Route.NAME + " (" +
                         Route.DEST_CODE + ", " +
-                        Route.ORIGIN_CODE + ") " +
-                        Route.NAME + " values (?, ?)",
-                new Object[]{route.getDestinationAirport(), route.getOriginAirport()});
+                        Route.ORIGIN_CODE + ") " + " values (?, ?)",
+                new Object[]{route.getDestinationAirport().getAirportCode(), route.getOriginAirport().getAirportCode()});
     }
 
     public void updateRoute(Route route) throws SQLException {
@@ -29,6 +29,16 @@ public class RouteDAO extends BaseDAO<Route> {
                         Route.ORIGIN_CODE + " = ? " +
                         "where " + Route.ID + " = ?",
                 new Object[]{route.getDestinationAirport(), route.getOriginAirport(), route.getId()});
+    }
+
+    public List<Route> findRouteByRoute(Route route) throws SQLException, ClassNotFoundException {
+        return read("select * from " + Route.NAME +
+                        " where " + Route.DEST_CODE + " = ?" +
+                        " and " + Route.ORIGIN_CODE + " = ?",
+                new Object[]{
+                        route.getDestinationAirport().getAirportCode(),
+                        route.getOriginAirport().getAirportCode()
+                });
     }
 
     public void deleteRoute(Route route) throws SQLException {

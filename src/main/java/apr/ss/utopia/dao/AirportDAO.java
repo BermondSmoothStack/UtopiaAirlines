@@ -15,11 +15,11 @@ public class AirportDAO extends BaseDAO<Airport> {
         super(conn);
     }
 
-    public void addAirplane(Airport airport) throws SQLException {
-        save("insert into (" +
+    public Integer addAirport(Airport airport) throws SQLException {
+        return save("insert into " + Airport.NAME + " (" +
                         Airport.CODE + ", " +
                         Airport.CITY + ") " +
-                        Airport.NAME + " values (?, ?)",
+                        " values (?, ?)",
                 new Object[]{
                         airport.getAirportCode(),
                         airport.getCity()

@@ -17,20 +17,20 @@ public class FlightDAO extends BaseDAO<Flight> {
         super(conn);
     }
 
-    public void addFlight(Flight flight) throws SQLException {
-        save("insert into (" +
-                        Flight.ID + "," +
+    public Integer addFlight(Flight flight) throws SQLException {
+        return save("insert into " + Flight.NAME + " (" +
                         Flight.ROUTE + ", " +
                         Flight.AIRPLANE + ", " +
                         Flight.DEPARTURE + ", " +
+                        Flight.RESERVED_SEATS + "," +
                         Flight.DURATION + "," +
-                        Flight.SEAT_PRICE + ") " +
-                        Flight.NAME + " values (?,?,?,?,?,?)",
+                        Flight.SEAT_PRICE + ")" +
+                        " values (?,?,?,?,?,?)",
                 new Object[]{
-                        flight.getId(),
                         flight.getRoute().getId(),
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
+                        0,
                         flight.getDuration(),
                         flight.getSeatPrice()
                 });
@@ -42,6 +42,7 @@ public class FlightDAO extends BaseDAO<Flight> {
                         Flight.AIRPLANE + " = ?, " +
                         Flight.DEPARTURE + " = ?, " +
                         Flight.DURATION + " = ?, " +
+                        Flight.RESERVED_SEATS + " = ?, " +
                         Flight.SEAT_PRICE + " = ? " +
                         "where " + Flight.ID + " = ?",
                 new Object[]{
@@ -49,6 +50,7 @@ public class FlightDAO extends BaseDAO<Flight> {
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
                         flight.getDuration(),
+                        0,
                         flight.getSeatPrice(),
                         flight.getId()
                 });

@@ -2,7 +2,6 @@ package apr.ss.utopia.service;
 
 import apr.ss.utopia.dao.SeatDAO;
 import apr.ss.utopia.dao.SeatTypeDAO;
-import apr.ss.utopia.dao.UserDAO;
 import apr.ss.utopia.entity.SeatType;
 import apr.ss.utopia.entity.Seats;
 
