@@ -17,7 +17,6 @@ public class RolesService {
         try {
             conn = util.getConnection();
             RoleDAO roleDAO = new RoleDAO(conn);
-            conn.commit();
             return roleDAO.readAllRole();
 
         } catch (SQLException | ClassNotFoundException e) {

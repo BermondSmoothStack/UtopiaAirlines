@@ -8,7 +8,7 @@ public class Seats {
     public static final String ID = "id";
     public static final String TYPE = "seat_type";
     public static final String AIRPLANE = "airplane_type";
-    public static final String CAPACITY = "capacity";
+    public static final String CAPACITY = "slots";
     public static final String RESERVED = "reserved_seats";
 
     private Integer id;

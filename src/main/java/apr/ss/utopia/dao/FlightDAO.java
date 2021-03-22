@@ -23,17 +23,15 @@ public class FlightDAO extends BaseDAO<Flight> {
                         Flight.ROUTE + ", " +
                         Flight.AIRPLANE + ", " +
                         Flight.DEPARTURE + ", " +
-                        Flight.RESERVED_SEATS + "," +
                         Flight.DURATION + "," +
                         Flight.SEAT_PRICE + ") " +
-                        Flight.NAME + " values (?,?,?,?,?,?,?)",
+                        Flight.NAME + " values (?,?,?,?,?,?)",
                 new Object[]{
                         flight.getId(),
                         flight.getRoute().getId(),
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
                         flight.getDuration(),
-                        flight.getReservedSeats(),
                         flight.getSeatPrice()
                 });
     }
@@ -44,7 +42,6 @@ public class FlightDAO extends BaseDAO<Flight> {
                         Flight.AIRPLANE + " = ?, " +
                         Flight.DEPARTURE + " = ?, " +
                         Flight.DURATION + " = ?, " +
-                        Flight.RESERVED_SEATS + " = ?, " +
                         Flight.SEAT_PRICE + " = ? " +
                         "where " + Flight.ID + " = ?",
                 new Object[]{
@@ -52,7 +49,6 @@ public class FlightDAO extends BaseDAO<Flight> {
                         flight.getAirplane().getId(),
                         flight.getDepartureTime(),
                         flight.getDuration(),
-                        flight.getReservedSeats(),
                         flight.getSeatPrice(),
                         flight.getId()
                 });

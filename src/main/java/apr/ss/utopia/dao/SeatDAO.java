@@ -16,14 +16,14 @@ public class SeatDAO extends BaseDAO<Seats> {
         super(conn);
     }
 
-    public void addSeat(Seats seats) throws SQLException {
-        save("insert into (" +
+    public Integer addSeat(Seats seats) throws SQLException {
+        return save("insert into " +
+                        Seats.NAME + " (" +
                         Seats.TYPE + ", " +
                         Seats.AIRPLANE + ", " +
                         Seats.CAPACITY + ", " +
                         Seats.RESERVED +
-                        ") " +
-                        Seats.NAME + " values (?,?,?,?)",
+                        ") " + " values (?,?,?,?)",
                 new Object[]{
                         seats.getType().getId(),
                         seats.getAirplaneType().getId(),

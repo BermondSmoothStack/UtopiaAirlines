@@ -35,8 +35,8 @@ public class SeatTypeDAO extends BaseDAO<SeatType> {
         return read("select * from " + SeatType.NAME, new Object[]{});
     }
 
-    public List<SeatType> readSeatTypesByCode(SeatType seat) throws ClassNotFoundException, SQLException {
-        return read("select * from " + SeatType.NAME + " where " + SeatType.ID + " = ?", new Object[]{seat.getId()});
+    public List<SeatType> readSeatTypesByType(SeatType seat) throws ClassNotFoundException, SQLException {
+        return read("select * from " + SeatType.NAME + " where " + SeatType.TYPE + " = ?", new Object[]{seat.getName()});
     }
 
     @Override

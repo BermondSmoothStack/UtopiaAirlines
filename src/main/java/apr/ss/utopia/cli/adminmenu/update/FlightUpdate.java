@@ -127,11 +127,11 @@ public class FlightUpdate extends AbsCRUD {
             }
         }
 
-        System.out.println("Current reserved seats is " + flight.getReservedSeats());
-        System.out.println("Enter reserved seats [0 - " + flight.getAirplane().getType().getCapacity() + "]");
-        IntInputHandler ihSeats = new IntInputHandler(0, flight.getAirplane().getType().getCapacity());
-        ihSeats.handler();
-        flight.setReservedSeats(ihSeats.getVerifiedInput());
+//        System.out.println("Current reserved seats is " + flight.getReservedSeats());
+//        System.out.println("Enter reserved seats [0 - " + flight.getAirplane().getType().getCapacity() + "]");
+//        IntInputHandler ihSeats = new IntInputHandler(0, flight.getAirplane().getType().getCapacity());
+//        ihSeats.handler();
+//        flight.setReservedSeats(ihSeats.getVerifiedInput());
         flight.setAirplane(a);
         flight.setDuration(duration);
         flight.setRoute(route);
