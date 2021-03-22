@@ -7,6 +7,7 @@ import apr.ss.utopia.entity.Flight;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class FlightService {
     Util util = new Util();
@@ -41,5 +42,20 @@ public class FlightService {
             System.out.println(e);
         }
         return false;
+    }
+
+    public Flight fetchFlightById(Flight flight) {
+        Connection conn;
+
+        try {
+            conn = util.getConnection();
+            FlightDAO airportDAO = new FlightDAO(conn);
+            List<Flight> rl = airportDAO.readFlightsByCode(flight);
+            return rl.get(0);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return new Flight();
     }
 }

@@ -1,11 +1,9 @@
 package apr.ss.utopia.dao;
 
-import apr.ss.utopia.entity.Airplane;
-import apr.ss.utopia.entity.Airport;
-import apr.ss.utopia.entity.Flight;
-import apr.ss.utopia.entity.Route;
+import apr.ss.utopia.entity.*;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -65,7 +63,76 @@ public class FlightDAO extends BaseDAO<Flight> {
     }
 
     public List<Flight> readFlightsByCode(Flight flight) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Flight.NAME + " where " + Flight.ID + " = ?", new Object[]{flight.getId()});
+        return readByCode(
+                "select " +
+                        "flight.id as flight_id, " +
+                        "origin.iata_id as origin_id, " +
+                        "origin.city as origin_city, " +
+                        "destination.iata_id as destination_id, " +
+                        "destination.city as destination_city, " +
+                        "departure_time, " +
+                        "seat_price, " +
+                        "duration_mins, " +
+                        "airplane.type_id as airplane_type " +
+                        "from " +
+                            "(select iata_id, " +
+                            "city, route.id as route_id, " +
+                            "flight.id as flight_id " +
+                            "from flight " +
+                            "join route on flight.route_id = route.id " +
+                            "join airport on route.origin_id = airport.iata_id) as origin " +
+                        "join " +
+                            "(select iata_id, " +
+                            "city, route.id as route_id " +
+                            "from " +
+                            "flight " +
+                            "join route on flight.route_id = route.id " +
+                            "join airport on route.destination_id = airport.iata_id) as destination " +
+                        "on origin.route_id = destination.route_id " +
+                        "join flight " +
+                        "on flight.id = origin.flight_id " +
+                        "join airplane " +
+                        "on airplane.id = flight.airplane_id " +
+                        "where flight.id = ?",
+                flight.getId()
+                );
+    }
+
+    public List<Flight> readByCode(String sql, Integer id)  throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1,id);
+        ResultSet rs = pstmt.executeQuery();
+        List<Flight> flights = new ArrayList<>();
+        while(rs.next()){
+            Flight f = new Flight();
+            Airplane a = new Airplane();
+            AirplaneType at = new AirplaneType();
+            Route r = new Route();
+            Airport o = new Airport();
+            Airport d = new Airport();
+
+            o.setAirportCode(rs.getString("origin_id"));
+            o.setCity(rs.getString("origin_city"));
+
+            d.setAirportCode(rs.getString("destination_id"));
+            d.setCity(rs.getString("destination_city"));
+
+            r.setOriginAirport(o);
+            r.setDestinationAirport(d);
+
+            at.setId(rs.getInt("airplane_type"));
+            a.setType(at);
+
+            f.setRoute(r);
+            f.setAirplane(a);
+            f.setId(rs.getInt("flight_id"));
+            f.setDuration(rs.getInt(Flight.DURATION));
+            f.setDepartureTime(rs.getTimestamp(Flight.DEPARTURE).toLocalDateTime());
+            f.setSeatPrice(rs.getFloat(Flight.SEAT_PRICE));
+
+            flights.add(f);
+        }
+        return flights;
     }
 
     @Override
