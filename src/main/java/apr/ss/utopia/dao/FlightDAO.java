@@ -62,6 +62,7 @@ public class FlightDAO extends BaseDAO<Flight> {
     public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {
         return readVerbose(
                 "select \n" +
+                        "airplane.id as airplane_id,\n" +
                         "seat_type.id as seat_type_id,\n"+
                         "seats.id as seat_id,\n" +
                         "name as seat_name,\n" +
@@ -180,6 +181,7 @@ public class FlightDAO extends BaseDAO<Flight> {
             r.setDestinationAirport(d);
 
             at.setId(rs.getInt("airplane_type"));
+            a.setId(rs.getInt("airplane_id"));
             a.setType(at);
 
             f.setId(rs.getInt("flight_id"));

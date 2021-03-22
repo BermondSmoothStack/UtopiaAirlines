@@ -124,14 +124,14 @@ public class FlightUpdateMenu implements Menu<String> {
     @Override
     public void display() {
         System.out.println("You have chosen to update the Flight with" +
-                "\nFlight ID: " + flight.getId() + " and " +
-                "\nFlight Origin: " + flight.getRoute().getOriginAirport().getCity() + " and " +
+                "\nFlight ID: " + flight.getId()  +
+                "\nFlight Origin: " + flight.getRoute().getOriginAirport().getCity() +
                 "\nFlight Destination: " + flight.getRoute().getDestinationAirport().getCity() + ". \n" +
                 "\nEnter ‘quit’ at any prompt to cancel operation.");
     }
 
     @Override
     public String getMenuSelection() {
-        return new StringInputHandler().getInput();
+        return new StringInputHandler().getVerifiedInput();
     }
 }
