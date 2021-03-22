@@ -2,6 +2,8 @@ package apr.ss.utopia.cli.adminmenu.read;
 
 import apr.ss.utopia.cli.adminmenu.AbsCRUD;
 import apr.ss.utopia.entity.Seats;
+import apr.ss.utopia.inputhandler.StringInputHandler;
+import apr.ss.utopia.service.SeatService;
 
 import java.sql.SQLException;
 
@@ -12,11 +14,15 @@ public class SeatsView extends AbsCRUD {
 
         System.out.println("View a Seat:\n" +
                 "Enter the Seat ID: ");
-        Seats seats = null; // TODO: call read Seats service
+        String code = new StringInputHandler().getVerifiedInput();
+        Seats seats = new Seats();
+        seats.setId(Integer.parseInt(code));
+        SeatService ss = new SeatService();
+        seats = ss.fetchSeatById(seats);
         System.out.println("Seat Information." +
                 "\nID: " + seats.getId() +
                 "\nSeat Type: " + seats.getType().getName() +
-                "\nAirplane Type: " + seats.getAirplaneType().getId() +
+                "\nSeat Amount: " + seats.getCapacity() +
                 "\nSlots: " + seats.getCapacity()
         );
     }

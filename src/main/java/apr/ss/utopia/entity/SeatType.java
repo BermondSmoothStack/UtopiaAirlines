@@ -5,7 +5,7 @@ import java.util.Objects;
 public class SeatType {
 
     public static final String NAME = "seat_type";
-    public static final String TYPE = "name";
+    public static final String TYPE_NAME = "name";
     public static final String ID = "id";
 
     public static final String FIRST_CLASS = "first";

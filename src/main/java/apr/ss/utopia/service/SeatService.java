@@ -75,4 +75,21 @@ public class SeatService {
         }
         return false;
     }
+
+    public Seats fetchSeatById(Seats seats) {
+        Connection conn = null;
+
+        try {
+            conn = util.getConnection();
+            SeatDAO seatDAO = new SeatDAO(conn);
+            Seats s = new Seats();
+            s.setId(seats.getId());
+            List<Seats> sl = seatDAO.readSeatsByCode(s);
+            s = sl.isEmpty() ? null : sl.get(0);
+            return s;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

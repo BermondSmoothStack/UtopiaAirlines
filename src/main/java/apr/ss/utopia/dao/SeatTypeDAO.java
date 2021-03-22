@@ -15,14 +15,14 @@ public class SeatTypeDAO extends BaseDAO<SeatType> {
 
     public void addSeatType(SeatType seat) throws SQLException {
         save("insert into (" +
-                        SeatType.TYPE + ") " +
+                        SeatType.TYPE_NAME + ") " +
                         SeatType.NAME + " values (?)",
                 new Object[]{seat.getName()});
     }
 
     public void updateSeatType(SeatType seat) throws SQLException {
         save("update " + SeatType.NAME + " set " +
-                        SeatType.TYPE + " = ? " +
+                        SeatType.TYPE_NAME + " = ? " +
                         "where " + SeatType.ID + " = ?",
                 new Object[]{seat.getName(), seat.getId()});
     }
@@ -36,7 +36,7 @@ public class SeatTypeDAO extends BaseDAO<SeatType> {
     }
 
     public List<SeatType> readSeatTypesByType(SeatType seat) throws ClassNotFoundException, SQLException {
-        return read("select * from " + SeatType.NAME + " where " + SeatType.TYPE + " = ?", new Object[]{seat.getName()});
+        return read("select * from " + SeatType.NAME + " where " + SeatType.TYPE_NAME + " = ?", new Object[]{seat.getName()});
     }
 
     @Override
@@ -46,7 +46,7 @@ public class SeatTypeDAO extends BaseDAO<SeatType> {
             SeatType st = new SeatType();
 
             st.setId(rs.getInt(SeatType.ID));
-            st.setName(rs.getString(SeatType.TYPE));
+            st.setName(rs.getString(SeatType.TYPE_NAME));
 
             seats.add(st);
         }

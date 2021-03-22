@@ -57,7 +57,16 @@ public class SeatDAO extends BaseDAO<Seats> {
     }
 
     public List<Seats> readSeatsByCode(Seats seats) throws ClassNotFoundException, SQLException {
-        return read("select * from " + Seats.NAME + " where " + Seats.ID + " = ?", new Object[]{seats.getId()});
+        return read("select " +
+                Seats.NAME + "." + Seats.ID + ", " +
+                Seats.CAPACITY + ", " +
+                Seats.RESERVED + ", " +
+                Seats.AIRPLANE + ", " +
+                SeatType.TYPE_NAME + ", " +
+                Seats.TYPE +
+                " from " + Seats.NAME +
+                " join seat_type on seats.seat_type = seat_type.id"+
+                " where "+ Seats.NAME +"." + Seats.ID + " = ?", new Object[]{seats.getId()});
     }
 
     @Override
@@ -65,14 +74,11 @@ public class SeatDAO extends BaseDAO<Seats> {
         List<Seats> seats = new ArrayList<>();
         while (rs.next()) {
             Seats s = new Seats();
-            AirplaneType at = new AirplaneType();
             SeatType st = new SeatType();
 
-            at.setId(rs.getInt(Seats.AIRPLANE));
-            st.setId(rs.getInt(Seats.TYPE));
+            st.setName(rs.getString(SeatType.TYPE_NAME));
 
             s.setId(rs.getInt(Seats.ID));
-            s.setAirplaneType(at);
             s.setCapacity(rs.getInt(Seats.CAPACITY));
             s.setReserved(rs.getInt(Seats.RESERVED));
             s.setType(st);
