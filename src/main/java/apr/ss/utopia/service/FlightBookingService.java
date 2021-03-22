@@ -19,7 +19,8 @@ public class FlightBookingService {
             PassengerDAO passengerDAO = new PassengerDAO(conn);
             BookingDAO bookingDAO = new BookingDAO(conn);
 
-            booking.setId(bookingDAO.addBooking(booking));
+            if (null == booking.getId())
+                booking.setId(bookingDAO.addBooking(booking));
             passenger.setBooking(booking);
             passenger.setId(passengerDAO.addPassenger(passenger));
 

@@ -31,6 +31,23 @@ public class UserService {
         return u;
     }
 
+    public boolean updateUser(User u){
+        Connection conn;
+
+        try {
+            conn = util.getConnection();
+            UserDAO userDAO = new UserDAO(conn);
+            Boolean isSuccess = userDAO.updateUser(u);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("User Creation Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public boolean deleteUserById(User user) {
         Connection conn;
         try {

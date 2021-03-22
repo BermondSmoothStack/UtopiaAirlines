@@ -3,8 +3,10 @@ package apr.ss.utopia.service;
 
 import apr.ss.utopia.dao.AirportDAO;
 import apr.ss.utopia.dao.BookingDAO;
+import apr.ss.utopia.dao.FlightBookingsDAO;
 import apr.ss.utopia.dao.PassengerDAO;
 import apr.ss.utopia.entity.Booking;
+import apr.ss.utopia.entity.FlightBookings;
 import apr.ss.utopia.entity.Passenger;
 
 import java.sql.Connection;
@@ -64,5 +66,26 @@ public class PassengerService {
             System.out.println(e);
         }
         return false;
+    }
+
+    public void updateTicket(Booking booking, Passenger passenger) throws SQLException {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            PassengerDAO passengerDAO = new PassengerDAO(conn);
+            BookingDAO bookingDAO = new BookingDAO(conn);
+
+            if (null == booking.getId())
+                booking.setId(bookingDAO.addBooking(booking));
+            passenger.setBooking(booking);
+            passengerDAO.updatePassenger(passenger);
+
+            conn.commit();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Passenger Lookup Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+
     }
 }

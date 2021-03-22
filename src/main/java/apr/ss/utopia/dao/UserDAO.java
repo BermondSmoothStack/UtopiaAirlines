@@ -39,8 +39,8 @@ public class UserDAO extends BaseDAO<User> {
                 });
     }
 
-    public void updateUser(User user) throws SQLException {
-        save("update " + User.NAME + " set " +
+    public boolean updateUser(User user) throws SQLException {
+        return save("update " + User.NAME + " set " +
                         User.ROLE + " = ?, " +
                         User.GVN_NAME + " = ?, " +
                         User.FAM_NAME + " = ?, " +
@@ -58,7 +58,7 @@ public class UserDAO extends BaseDAO<User> {
                         user.getPassword(),
                         user.getPhone(),
                         user.getId()
-                });
+                }) > 0;
     }
 
     public boolean deleteUser(User user) throws SQLException {

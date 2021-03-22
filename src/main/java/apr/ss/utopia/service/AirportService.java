@@ -28,6 +28,23 @@ public class AirportService {
         return airport;
     }
 
+    public boolean updateAirport(Airport airport){
+        Connection conn;
+
+        try {
+            conn = util.getConnection();
+            AirportDAO airportDAO = new AirportDAO(conn);
+            Boolean isSuccess = airportDAO.updateAirportCode(airport);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Airport Update Failed! Make sure you IATA already exists.");
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public List<Airport> fetchAllAirports() {
         Connection conn;
 

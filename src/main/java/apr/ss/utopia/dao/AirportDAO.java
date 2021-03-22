@@ -26,14 +26,14 @@ public class AirportDAO extends BaseDAO<Airport> {
                 });
     }
 
-    public void updateAirportCode(Airport airport) throws SQLException {
-        save("update " + Airport.NAME + " set " +
+    public Boolean updateAirportCode(Airport airport) throws SQLException {
+        return save("update " + Airport.NAME + " set " +
                         Airport.CITY + " = ? " +
                         "where " + Airport.CODE + " = ?",
                 new Object[]{
                         airport.getCity(),
                         airport.getAirportCode()
-                });
+                }) > 0;
     }
 
     public boolean deleteAirport(Airport airport) throws SQLException {
