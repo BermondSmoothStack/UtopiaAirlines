@@ -3,6 +3,7 @@ package apr.ss.utopia.cli.flightmenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.inputhandler.IntInputHandler;
+import apr.ss.utopia.service.FlightService;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,30 +20,14 @@ public class FlightSelectMenu implements Menu<Integer> {
     }
 
     public FlightSelectMenu(String header, String method) throws IOException {
-        // TODO: get all flights
-        //  select origin.iata_id as origin_id, origin.city as origin, destination.iata_id as destination_id,  destination.city as destination
-        //  from
-        //  (select iata_id, city
-        //  from flight
-        //  join route
-        //  on flight.id = route.id
-        //  join airport
-        //  on route.origin_id = airport.iata_id) as origin,
-        //  *
-        //  (select iata_id, city
-        //  from flight
-        //  join route
-        //  on flight.id = route.id
-        //  join airport
-        //  on route.destination_id = airport.iata_id) as destination
-        //  ,booking where confirmation_code = "5555554";  IF CANCELLING THIS IS INCLUDED
-        //  *
-        //  ** managedFlights = resultSet **
+        FlightService fs = new FlightService();
+        managedFlights = fs.fetchAllFlights();
         while (true) {
             display(header);
             Integer input = getMenuSelection();
             if (input > managedFlights.size())
                 return;
+            input--;
             switch (method) {
                 case VIEW_METHOD:
                     new FlightMenu(managedFlights.get(input));
@@ -61,12 +46,9 @@ public class FlightSelectMenu implements Menu<Integer> {
     @Override
     public void display() {
         int c = 1;
+        System.out.println("Select a flight:");
         for (Flight f : managedFlights) {
-            String item = "[" + c + "] " +
-                    f.getRoute().getOriginAirport().getAirportCode() +
-                    f.getRoute().getOriginAirport().getCity() +
-                    " → " +
-                    f.getRoute().getDestinationAirport().getCity();
+            String item = "[" + c + "] " + f.showRoute();
             System.out.println(item);
             c++;
         }

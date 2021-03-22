@@ -36,10 +36,10 @@ public class FlightViewMenu implements Menu<Integer> {
                         ".\n\n" +
                         "Departure Airport: " + flight.getRoute().getOriginAirport().getCity() + "\t|\t" +
                         "Arrival Airport: " + flight.getRoute().getDestinationAirport().getCity() +
-                        "|\n" +
+                        "\n" +
                         "Departure Date: " + getDate(flight.getDepartureTime()) + "\t|\t" +
                         "Departure Time: " + getTime(flight.getDepartureTime()) +
-                        "|\n" +
+                        "\n" +
                         "Arrival Date: " + getDate(flight.getArrivalTime()) + "\t|\t" +
                         "Arrival Time: " + getTime(flight.getArrivalTime()) +
                         "\n\n" +
@@ -49,6 +49,7 @@ public class FlightViewMenu implements Menu<Integer> {
             sb.append(seats.getType().getName());
             sb.append(" → ");
             sb.append(seats.getAvailable());
+            sb.append("\n");
         }
         sb.append("Press Enter to go back to the previous menu");
         System.out.println(sb.toString());

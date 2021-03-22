@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FlightDAO extends BaseDAO<Flight> {
 
@@ -59,68 +60,81 @@ public class FlightDAO extends BaseDAO<Flight> {
     }
 
     public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {
-        return readVerbose("select " +
-                "flight.id as flight_id, " +
-                "origin.iata_id as origin_id, " +
-                "origin.city as origin_city, " +
-                "destination.iata_id as destination_id, " +
-                "destination.city as destination_city, " +
-                "departure_time, " +
-                "seat_price, " +
-                "duration_mins, " +
-                "airplane.type_id as airplane_type " +
-                "from " +
-                "(select iata_id, " +
-                "city, route.id as route_id, " +
-                "flight.id as flight_id " +
-                "from flight " +
-                "join route on flight.route_id = route.id " +
-                "join airport on route.origin_id = airport.iata_id) as origin " +
-                "join " +
-                "(select iata_id, " +
-                "city, route.id as route_id " +
-                "from " +
-                "flight " +
-                "join route on flight.route_id = route.id " +
-                "join airport on route.destination_id = airport.iata_id) as destination " +
-                "on origin.route_id = destination.route_id " +
-                "join flight " +
-                "on flight.id = origin.flight_id " +
-                "join airplane " +
-                "on airplane.id = flight.airplane_id ", new Integer[]{});
+        return readVerbose(
+                "select \n" +
+                        "seat_type.id as seat_type_id,\n"+
+                        "seats.id as seat_id,\n" +
+                        "name as seat_name,\n" +
+                        "slots,\n" +
+                        "seats.reserved_seats,\n" +
+                        "flight.id as flight_id, \n" +
+                        "origin.iata_id as origin_id, \n" +
+                        "origin.city as origin_city, \n" +
+                        "destination.iata_id as destination_id, \n" +
+                        "destination.city as destination_city, \n" +
+                        "departure_time, \n" +
+                        "seat_price, \n" +
+                        "duration_mins, \n" +
+                        "airplane.type_id as airplane_type \n" +
+                        "from \n" +
+                        "(select iata_id, \n" +
+                        "city, route.id as route_id, \n" +
+                        "flight.id as flight_id \n" +
+                        "from flight \n" +
+                        "join route on flight.route_id = route.id \n" +
+                        "join airport on route.origin_id = airport.iata_id) as origin \n" +
+                        "join \n" +
+                        "(select iata_id, \n" +
+                        "city, route.id as route_id \n" +
+                        "from \n" +
+                        "flight \n" +
+                        "join route on flight.route_id = route.id \n" +
+                        "join airport on route.destination_id = airport.iata_id) as destination \n" +
+                        "on origin.route_id = destination.route_id \n" +
+                        "left join flight on flight.id = origin.flight_id \n" +
+                        "left join airplane on flight.airplane_id = airplane.id\n" +
+                        "left join airplane_type on airplane.type_id = airplane_type.id\n" +
+                        "left join seats on seats.airplane_type = airplane_type.id\n" +
+                        "left join seat_type on seats.seat_type = seat_type.id", new Integer[]{});
     }
 
     public List<Flight> readFlightsByCode(Flight flight) throws ClassNotFoundException, SQLException {
         return readVerbose(
-                "select " +
-                        "flight.id as flight_id, " +
-                        "origin.iata_id as origin_id, " +
-                        "origin.city as origin_city, " +
-                        "destination.iata_id as destination_id, " +
-                        "destination.city as destination_city, " +
-                        "departure_time, " +
-                        "seat_price, " +
-                        "duration_mins, " +
-                        "airplane.type_id as airplane_type " +
-                        "from " +
-                        "(select iata_id, " +
-                        "city, route.id as route_id, " +
-                        "flight.id as flight_id " +
-                        "from flight " +
-                        "join route on flight.route_id = route.id " +
-                        "join airport on route.origin_id = airport.iata_id) as origin " +
-                        "join " +
-                        "(select iata_id, " +
-                        "city, route.id as route_id " +
-                        "from " +
-                        "flight " +
-                        "join route on flight.route_id = route.id " +
-                        "join airport on route.destination_id = airport.iata_id) as destination " +
-                        "on origin.route_id = destination.route_id " +
-                        "join flight " +
-                        "on flight.id = origin.flight_id " +
-                        "join airplane " +
-                        "on airplane.id = flight.airplane_id " +
+                "select \n" +
+                        "seat_type.id as seat_type_id,\n" +
+                        "seats.id as seat_id,\n" +
+                        "name as seat_name,\n" +
+                        "slots,\n" +
+                        "seats.reserved_seats,\n" +
+                        "flight.id as flight_id, \n" +
+                        "origin.iata_id as origin_id, \n" +
+                        "origin.city as origin_city, \n" +
+                        "destination.iata_id as destination_id, \n" +
+                        "destination.city as destination_city, \n" +
+                        "departure_time, \n" +
+                        "seat_price, \n" +
+                        "duration_mins, \n" +
+                        "airplane.type_id as airplane_type \n" +
+                        "from \n" +
+                        "(select iata_id, \n" +
+                        "city, route.id as route_id, \n" +
+                        "flight.id as flight_id \n" +
+                        "from flight \n" +
+                        "join route on flight.route_id = route.id \n" +
+                        "join airport on route.origin_id = airport.iata_id) as origin \n" +
+                        "join \n" +
+                        "(select iata_id, \n" +
+                        "city, route.id as route_id \n" +
+                        "from \n" +
+                        "flight \n" +
+                        "join route on flight.route_id = route.id \n" +
+                        "join airport on route.destination_id = airport.iata_id) as destination \n" +
+                        "on origin.route_id = destination.route_id \n" +
+                        "left join flight on flight.id = origin.flight_id \n" +
+                        "left join airplane on flight.airplane_id = airplane.id\n" +
+                        "left join airplane_type on airplane.type_id = airplane_type.id\n" +
+                        "left join seats on seats.airplane_type = airplane_type.id\n" +
+                        "left join seat_type on seats.seat_type = seat_type.id\n" +
                         "where flight.id = ?",
                 new Integer[]{flight.getId()}
         );
@@ -136,12 +150,25 @@ public class FlightDAO extends BaseDAO<Flight> {
         ResultSet rs = pstmt.executeQuery();
         List<Flight> flights = new ArrayList<>();
         while (rs.next()) {
+
             Flight f = new Flight();
             Airplane a = new Airplane();
             AirplaneType at = new AirplaneType();
             Route r = new Route();
             Airport o = new Airport();
             Airport d = new Airport();
+            Seats s = new Seats();
+            SeatType st = new SeatType();
+            List<Seats> sl = new ArrayList<>();
+
+            st.setId(rs.getInt("seat_type_id"));
+            st.setName(rs.getString("seat_name"));
+            s.setId(rs.getInt("seat_id"));
+            s.setCapacity(rs.getInt("slots"));
+            s.setReserved(rs.getInt("reserved_seats"));
+
+            s.setType(st);
+            s.setAirplaneType(at);
 
             o.setAirportCode(rs.getString("origin_id"));
             o.setCity(rs.getString("origin_city"));
@@ -155,13 +182,25 @@ public class FlightDAO extends BaseDAO<Flight> {
             at.setId(rs.getInt("airplane_type"));
             a.setType(at);
 
+            f.setId(rs.getInt("flight_id"));
+
             f.setRoute(r);
             f.setAirplane(a);
-            f.setId(rs.getInt("flight_id"));
             f.setDuration(rs.getInt(Flight.DURATION));
             f.setDepartureTime(rs.getTimestamp(Flight.DEPARTURE).toLocalDateTime());
             f.setSeatPrice(rs.getFloat(Flight.SEAT_PRICE));
 
+            Flight flightExist = null;
+            if (!flights.isEmpty()) {
+                List<Flight> flightList = flights.stream().filter(fd -> f.getId().equals(fd.getId())).collect(Collectors.toList());
+                flightExist = !flightList.isEmpty() ? flightList.get(0) : null;
+            }
+
+            if (null != flightExist) {
+                sl = flightExist.getSeats();
+            }
+            sl.add(s);
+            f.setSeats(sl);
             flights.add(f);
         }
         return flights;

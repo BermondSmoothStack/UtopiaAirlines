@@ -76,7 +76,6 @@ public class SeatsUpdate extends AbsCRUD {
         seats.setCapacity(slots);
 
         ss.updateSeat(seats);
-        // TODO: update new seat
 
     }
 }

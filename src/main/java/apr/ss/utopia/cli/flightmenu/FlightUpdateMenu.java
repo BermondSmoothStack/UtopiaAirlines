@@ -5,6 +5,8 @@ import apr.ss.utopia.entity.Airport;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Route;
 import apr.ss.utopia.inputhandler.StringInputHandler;
+import apr.ss.utopia.service.AirportService;
+import apr.ss.utopia.service.FlightService;
 
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -26,14 +28,17 @@ public class FlightUpdateMenu implements Menu<String> {
         while (true) {
             display();
 
+            AirportService as = new AirportService();
             while (!proceed) {
                 System.out.println("Please enter a new Origin Airport or enter " + NA + " for no change.");
                 input = getMenuSelection();
                 if (input.equalsIgnoreCase(QUIT)) return;
                 if (!NA.equalsIgnoreCase(input)) {
                     Route or = flight.getRoute();
-                    Airport oa = null;
-                    // TODO: fetch airport
+
+                    Airport oa = new Airport();
+                    oa.setAirportCode(input);
+                    oa = as.fetchAirportByIATA(oa);
                     if (null == oa) {
                         System.out.println("Can't find Airport!");
                     } else {
@@ -51,8 +56,9 @@ public class FlightUpdateMenu implements Menu<String> {
                 if (input.equalsIgnoreCase(QUIT)) return;
                 if (!NA.equalsIgnoreCase(input)) {
                     Route dr = flight.getRoute();
-                    Airport da = null;
-                    // TODO: fetch airport
+                    Airport da = new Airport();
+                    da.setAirportCode(input);
+                    da = as.fetchAirportByIATA(da);
                     if (null == da) {
                         System.out.println("Can't find Airport");
                     } else {
@@ -63,7 +69,7 @@ public class FlightUpdateMenu implements Menu<String> {
                 } else proceed = true;
             }
             proceed = false;
-            while (!proceed){
+            while (!proceed) {
                 System.out.println("Please enter a new Departure Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
                 String dateStr = getMenuSelection();
                 if (NA.equalsIgnoreCase(dateStr)) break;
@@ -75,7 +81,7 @@ public class FlightUpdateMenu implements Menu<String> {
                 if (QUIT.equalsIgnoreCase(timeStr)) return;
 
                 String dateTimeStr = dateStr + " " + timeStr;
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm").withResolverStyle(ResolverStyle.STRICT);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT);
                 try {
                     LocalDateTime date = LocalDateTime.parse(dateTimeStr, dtf);
                     flight.setDepartureTime(date);
@@ -86,7 +92,7 @@ public class FlightUpdateMenu implements Menu<String> {
             }
 
             proceed = false;
-            while (!proceed){
+            while (!proceed) {
                 System.out.println("Please enter a new Arrival Date (mm-dd-yyyy Format) or enter " + NA + " for no change.");
                 String dateStr = getMenuSelection();
                 if (NA.equalsIgnoreCase(dateStr)) break;
@@ -98,7 +104,7 @@ public class FlightUpdateMenu implements Menu<String> {
                 if (QUIT.equalsIgnoreCase(timeStr)) return;
 
                 String dateTimeStr = dateStr + " " + timeStr;
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm").withResolverStyle(ResolverStyle.STRICT);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-uuuu HH:mm").withResolverStyle(ResolverStyle.STRICT);
                 try {
                     LocalDateTime date = LocalDateTime.parse(dateTimeStr, dtf);
                     LocalDateTime fromDate = flight.getDepartureTime();
@@ -109,7 +115,8 @@ public class FlightUpdateMenu implements Menu<String> {
                     System.out.println("Date and time given was invalid, try again.");
                 }
             }
-            // TODO: Process inputs for an update
+            FlightService fs = new FlightService();
+            fs.updateFlight(flight.getRoute(), flight);
 
         }
     }

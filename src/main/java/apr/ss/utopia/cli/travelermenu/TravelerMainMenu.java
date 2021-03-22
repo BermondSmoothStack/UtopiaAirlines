@@ -3,7 +3,9 @@ package apr.ss.utopia.cli.travelermenu;
 import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.cli.flightmenu.FlightSelectMenu;
 import apr.ss.utopia.entity.FlightBookings;
+import apr.ss.utopia.entity.User;
 import apr.ss.utopia.inputhandler.IntInputHandler;
+import apr.ss.utopia.service.UserService;
 
 import java.io.IOException;
 
@@ -38,17 +40,18 @@ public class TravelerMainMenu implements Menu<Integer> {
 
     }
 
-    private FlightBookings handleMembership() {
-        FlightBookings fb = null;
+    private Boolean handleMembership() {
         while (true) {
             TravelerNumberInputHandler tih = new TravelerNumberInputHandler();
             System.out.println("Enter your Membership Number or leave it empty to go back to the previous menu");
             Integer input = tih.getInput();
-            // TODO: Fetch user using membership number (confirmation code from booking table)
+            UserService us = new UserService();
+            User user = us.getUserById(input);
+
             if (input < 0)
                 return null;
-            if (true) {
-                return fb;
+            if ((null != user && null != user.getId())) {
+                return true;
             }
         }
     }

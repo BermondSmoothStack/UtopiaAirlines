@@ -1,9 +1,11 @@
 package apr.ss.utopia.cli.flightmenu;
 
 import apr.ss.utopia.cli.Menu;
+import apr.ss.utopia.entity.Booking;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.SeatType;
 import apr.ss.utopia.inputhandler.IntInputHandler;
+import apr.ss.utopia.service.BookingService;
 
 import java.io.IOException;
 
@@ -18,7 +20,7 @@ public class FlightMgmtMenu implements Menu<Integer> {
         this.flight = flight;
         String type = "";
         while (true) {
-            display("Pick a seat you want to " + mode + "a ticket for.\n ");
+            display("Pick a seat you want to " + mode + " a ticket for.\n ");
             switch (getMenuSelection()) {
                 case 1:
                     new FlightViewMenu(flight);

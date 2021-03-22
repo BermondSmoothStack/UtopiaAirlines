@@ -4,6 +4,7 @@ import apr.ss.utopia.cli.Menu;
 import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Seats;
 import apr.ss.utopia.inputhandler.IntInputHandler;
+import apr.ss.utopia.service.SeatService;
 
 public class FlightSeatsMenu implements Menu<Integer> {
     private Flight flight;
@@ -35,8 +36,12 @@ public class FlightSeatsMenu implements Menu<Integer> {
             System.out.println("Enter new number of seats: ");
 
             IntInputHandler ih = new IntInputHandler(0, 999);
-            // TODO: update number of seats
-            // TODO: display updated results
+            ih.handler();
+            s.setCapacity(ih.getVerifiedInput());
+            SeatService ss = new SeatService();
+            ss.updateSeat(s);
+            s = ss.fetchSeatById(s);
+            System.out.println("New seat amount: " + s.getCapacity());
         }
     }
 
