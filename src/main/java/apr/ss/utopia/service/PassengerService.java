@@ -45,7 +45,7 @@ public class PassengerService {
             return p;
 
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Booking Creation Failed! Make sure you entered the correct information.");
+            System.out.println("Passenger Lookup Failed! Make sure you entered the correct information.");
             System.out.println(e);
         }
         return null;

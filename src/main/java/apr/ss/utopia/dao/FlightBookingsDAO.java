@@ -14,11 +14,11 @@ public class FlightBookingsDAO extends BaseDAO<FlightBookings> {
         super(conn);
     }
 
-    public void addFlightBookings(FlightBookings flightBookings) throws SQLException {
-        save("insert into (" +
+    public Integer addFlightBookings(FlightBookings flightBookings) throws SQLException {
+        return save("insert into "+ FlightBookings.NAME +  " ( "+
                         FlightBookings.FLIGHT_ID + ", " +
                         FlightBookings.BOOKING_ID + ") " +
-                        FlightBookings.NAME + " values (?, ?)",
+                        " values (?, ?)",
                 new Object[]{
                         flightBookings.getFlight().getId(),
                         flightBookings.getBooking().getId()

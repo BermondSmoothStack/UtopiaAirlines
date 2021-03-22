@@ -24,7 +24,7 @@ public abstract class BaseDAO <T>{
         while(rs.next()) {
             return rs.getInt(1);
         }
-        return null;
+        return -1;
     }
 
     public boolean delete(String sql, Object[] vals) throws SQLException {

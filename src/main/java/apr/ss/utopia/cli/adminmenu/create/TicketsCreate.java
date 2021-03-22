@@ -2,9 +2,13 @@ package apr.ss.utopia.cli.adminmenu.create;
 
 import apr.ss.utopia.cli.adminmenu.AbsCRUD;
 import apr.ss.utopia.entity.Booking;
+import apr.ss.utopia.entity.Flight;
 import apr.ss.utopia.entity.Passenger;
+import apr.ss.utopia.inputhandler.IntInputHandler;
 import apr.ss.utopia.inputhandler.StringInputHandler;
 import apr.ss.utopia.service.BookingService;
+import apr.ss.utopia.service.FlightBookingService;
+import apr.ss.utopia.service.FlightService;
 import apr.ss.utopia.service.PassengerService;
 
 import java.sql.SQLException;
@@ -12,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.List;
 import java.util.UUID;
 
 public class TicketsCreate extends AbsCRUD {
@@ -30,7 +35,6 @@ public class TicketsCreate extends AbsCRUD {
             b.setActive(true);
             String uuid = UUID.randomUUID().toString().replace("-", "");
             b.setConfirmationCode(uuid);
-            b = new BookingService().createBooking(b);
         } else {
             while (true) {
                 System.out.println("Enter Booking ID:");
@@ -67,10 +71,26 @@ public class TicketsCreate extends AbsCRUD {
         p.setGender(new StringInputHandler().getVerifiedInput());
         System.out.println("Enter Address:");
         p.setAddress(new StringInputHandler().getVerifiedInput());
-        p.setBooking(b);
-        p = new PassengerService().createPassenger(p);
-        if (null == p || null == p.getId() || p.getId() < 1) {
-            System.out.println("Passenger Creation Failed, please try again.");
-        } else System.out.println("Ticket Created. Confirmation code is: " + p.getBooking().getConfirmationCode());
+        System.out.println("Select a flight\n");
+        FlightService fs = new FlightService();
+        List<Flight> flightList = fs.fetchAllFlights();
+        int f = 1;
+        for (Flight flight : flightList) {
+            System.out.println("[" + f + "] " + flight.showRoute());
+            f++;
+        }
+        IntInputHandler fih = new IntInputHandler(1, f);
+        fih.handler();
+        Flight flight = flightList.get(fih.getVerifiedInput() - 1);
+        FlightBookingService fbs = new FlightBookingService();
+        try {
+            fbs.createTicket(flight, b, p);
+            System.out.println("Ticket Created. Confirmation code is: " + p.getBooking().getConfirmationCode());
+        } catch (SQLException e) {
+            System.out.println("Ticket Creation Failed");
+            System.out.println(e);
+        }
+
+
     }
 }

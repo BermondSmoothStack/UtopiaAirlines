@@ -88,8 +88,14 @@ public class Flight {
         this.reservedSeats = reservedSeats;
     }
 
-    public LocalDateTime getArrivalTime(){
+    public LocalDateTime getArrivalTime() {
         return departureTime.plusMinutes(duration);
+    }
+
+    public String showRoute() {
+        return getRoute().getOriginAirport().getCity() +
+                " → " +
+                getRoute().getDestinationAirport().getCity();
     }
 
     @Override

@@ -59,11 +59,39 @@ public class FlightDAO extends BaseDAO<Flight> {
     }
 
     public List<Flight> readAllFlight() throws ClassNotFoundException, SQLException {
-        return read("select * from " + Flight.NAME, new Object[]{});
+        return readVerbose("select " +
+                "flight.id as flight_id, " +
+                "origin.iata_id as origin_id, " +
+                "origin.city as origin_city, " +
+                "destination.iata_id as destination_id, " +
+                "destination.city as destination_city, " +
+                "departure_time, " +
+                "seat_price, " +
+                "duration_mins, " +
+                "airplane.type_id as airplane_type " +
+                "from " +
+                "(select iata_id, " +
+                "city, route.id as route_id, " +
+                "flight.id as flight_id " +
+                "from flight " +
+                "join route on flight.route_id = route.id " +
+                "join airport on route.origin_id = airport.iata_id) as origin " +
+                "join " +
+                "(select iata_id, " +
+                "city, route.id as route_id " +
+                "from " +
+                "flight " +
+                "join route on flight.route_id = route.id " +
+                "join airport on route.destination_id = airport.iata_id) as destination " +
+                "on origin.route_id = destination.route_id " +
+                "join flight " +
+                "on flight.id = origin.flight_id " +
+                "join airplane " +
+                "on airplane.id = flight.airplane_id ", new Integer[]{});
     }
 
     public List<Flight> readFlightsByCode(Flight flight) throws ClassNotFoundException, SQLException {
-        return readByCode(
+        return readVerbose(
                 "select " +
                         "flight.id as flight_id, " +
                         "origin.iata_id as origin_id, " +
@@ -75,35 +103,39 @@ public class FlightDAO extends BaseDAO<Flight> {
                         "duration_mins, " +
                         "airplane.type_id as airplane_type " +
                         "from " +
-                            "(select iata_id, " +
-                            "city, route.id as route_id, " +
-                            "flight.id as flight_id " +
-                            "from flight " +
-                            "join route on flight.route_id = route.id " +
-                            "join airport on route.origin_id = airport.iata_id) as origin " +
+                        "(select iata_id, " +
+                        "city, route.id as route_id, " +
+                        "flight.id as flight_id " +
+                        "from flight " +
+                        "join route on flight.route_id = route.id " +
+                        "join airport on route.origin_id = airport.iata_id) as origin " +
                         "join " +
-                            "(select iata_id, " +
-                            "city, route.id as route_id " +
-                            "from " +
-                            "flight " +
-                            "join route on flight.route_id = route.id " +
-                            "join airport on route.destination_id = airport.iata_id) as destination " +
+                        "(select iata_id, " +
+                        "city, route.id as route_id " +
+                        "from " +
+                        "flight " +
+                        "join route on flight.route_id = route.id " +
+                        "join airport on route.destination_id = airport.iata_id) as destination " +
                         "on origin.route_id = destination.route_id " +
                         "join flight " +
                         "on flight.id = origin.flight_id " +
                         "join airplane " +
                         "on airplane.id = flight.airplane_id " +
                         "where flight.id = ?",
-                flight.getId()
-                );
+                new Integer[]{flight.getId()}
+        );
     }
 
-    public List<Flight> readByCode(String sql, Integer id)  throws SQLException {
+    public List<Flight> readVerbose(String sql, Integer[] vals) throws SQLException {
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1,id);
+        int count = 1;
+        for (Integer o : vals) {
+            pstmt.setInt(count, o);
+            count++;
+        }
         ResultSet rs = pstmt.executeQuery();
         List<Flight> flights = new ArrayList<>();
-        while(rs.next()){
+        while (rs.next()) {
             Flight f = new Flight();
             Airplane a = new Airplane();
             AirplaneType at = new AirplaneType();

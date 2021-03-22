@@ -7,6 +7,7 @@ import apr.ss.utopia.entity.Flight;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlightService {
@@ -27,6 +28,19 @@ public class FlightService {
             System.out.println(e);
         }
         return f;
+    }
+
+    public List<Flight> fetchAllFlights(){
+        Connection conn;
+        try{
+            conn = util.getConnection();
+            FlightDAO flightDAO = new FlightDAO(conn);
+            return flightDAO.readAllFlight();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+
+        return new ArrayList<>();
     }
 
     public boolean deleteFlightById(Flight f){

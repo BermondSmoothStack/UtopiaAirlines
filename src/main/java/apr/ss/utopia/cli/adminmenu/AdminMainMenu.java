@@ -45,7 +45,7 @@ public class AdminMainMenu implements Menu<Integer> {
         System.out.println("Administrator Menu\n" +
                 "[1] Manage Flights\n" +
                 "[2] Manage Seats\n" +
-                "[3] Manage Tickets and Passengers\n" +
+                "[3] Manage Passengers\n" +
                 "[4] Manage Airports\n" +
                 "[5] Manage Users\n" +
                 "[6] Over-ride Trip Cancellation for a ticket.\n" +
