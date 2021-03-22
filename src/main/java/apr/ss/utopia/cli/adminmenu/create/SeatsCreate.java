@@ -18,7 +18,7 @@ public class SeatsCreate extends AbsCRUD {
     @Override
     protected void display() throws SQLException {
         Seats seats = new Seats();
-        SeatType seatType = null;
+        SeatType seatType
         System.out.println("Creating new Seat.");
         System.out.println("Enter Seat Type:\n" +
                 "[1] First Class\n" +
@@ -28,8 +28,7 @@ public class SeatsCreate extends AbsCRUD {
         IntInputHandler ih = new IntInputHandler(1, 4);
         ih.handler();
         Integer seatTypeInt = ih.getVerifiedInput();
-        // TODO: Fetch SeatType
-        String stypeString = "";
+        String stypeString;
         switch (seatTypeInt) {
             case 1:
                 stypeString = SeatType.FIRST_CLASS;
@@ -80,8 +79,6 @@ public class SeatsCreate extends AbsCRUD {
         if (!(null == seats || null == seats.getId())) {
             System.out.println("Seat Created Successfully");
         }
-
-        // TODO: Create new seat
     }
 
 }
