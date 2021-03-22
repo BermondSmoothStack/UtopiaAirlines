@@ -61,4 +61,20 @@ public class BookingService {
         }
         return false;
     }
+
+    public Boolean updateBookingStatus(Booking b) {
+        Connection conn;
+        try {
+            conn = util.getConnection();
+            BookingDAO bookingDAO = new BookingDAO(conn);
+            Boolean isSuccess = bookingDAO.updateBooking(b);
+            conn.commit();
+            return isSuccess;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Booking Update Failed! Make sure you entered the correct information.");
+            System.out.println(e);
+        }
+        return false;
+    }
 }

@@ -13,7 +13,6 @@ public class EmployeeMainMenu implements Menu<Integer> {
             display();
             switch (getMenuSelection()) {
                 case 1:
-                    // TODO: Employee Flight path
                     new FlightSelectMenu("Please select a flight");
                     break;
                 case 2:

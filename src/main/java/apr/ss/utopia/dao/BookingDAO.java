@@ -25,12 +25,12 @@ public class BookingDAO extends BaseDAO<Booking> {
                 });
     }
 
-    public void updateBooking(Booking booking) throws SQLException {
-        save("update " + Booking.NAME + " set " +
+    public boolean updateBooking(Booking booking) throws SQLException {
+        return save("update " + Booking.NAME + " set " +
                         Booking.ACTIVE + " = ?, " +
                         Booking.CONFIRMATION_CODE + " = ? " +
                         "where " + Booking.ID + " = ?",
-                new Object[]{booking.getActive(), booking.getConfirmationCode(), booking.getId()});
+                new Object[]{booking.getActive(), booking.getConfirmationCode(), booking.getId()}) > 0;
     }
 
     public boolean deleteBookingByConfirmationCode(Booking booking) throws SQLException {
